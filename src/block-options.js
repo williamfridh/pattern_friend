@@ -44,15 +44,15 @@ addFilter(
 			...settings,
 			attributes: {
 				...settings.attributes,
-				'hideOnMobile': {
+				'wp_pf_hide_on_mobile': {
 					type: 'boolean',
 					default: false,
 				},
-				'hideOnTablet': {
+				'wp_pf_hide_on_tablet': {
 					type: 'boolean',
 					default: false,
 				},
-				'hideOnComputer': {
+				'wp_pf_hide_on_computer': {
 					type: 'boolean',
 					default: false,
 				},
@@ -65,9 +65,9 @@ addFilter(
 function Edit(props) {
 	const {
 		attributes: {
-			'hideOnMobile': hideOnMobile,
-			'hideOnTablet': hideOnTablet,
-			'hideOnComputer': hideOnComputer,
+			'wp_pf_hide_on_mobile': wp_pf_hide_on_mobile,
+			'wp_pf_hide_on_tablet': wp_pf_hide_on_tablet,
+			'wp_pf_hide_on_computer': wp_pf_hide_on_computer,
 		},
 		setAttributes,
 	} = props
@@ -78,25 +78,25 @@ function Edit(props) {
 				<PanelRow>
 					<ToggleControl
 						label={__("Hide on mobile")}
-						checked={ hideOnMobile }
-						onChange={ () => setAttributes( { 'hideOnMobile': ! hideOnMobile } ) }
+						checked={ wp_pf_hide_on_mobile }
+						onChange={ () => setAttributes( { 'wp_pf_hide_on_mobile': ! wp_pf_hide_on_mobile } ) }
 					/>
 				</PanelRow>
 				<PanelRow>
 					<ToggleControl
 						label={__("Hide on tablet")}
-						checked={ hideOnTablet }
-						onChange={ () => setAttributes( { 'hideOnTablet': ! hideOnTablet } ) }
+						checked={ wp_pf_hide_on_tablet }
+						onChange={ () => setAttributes( { 'wp_pf_hide_on_tablet': ! wp_pf_hide_on_tablet } ) }
 					/>
 				</PanelRow>
 				<PanelRow>
 					<ToggleControl
 						label={__("Hide on computer")}
-						checked={ hideOnComputer }
-						onChange={ () => setAttributes( { 'hideOnComputer': ! hideOnComputer } ) }
+						checked={ wp_pf_hide_on_computer }
+						onChange={ () => setAttributes( { 'wp_pf_hide_on_computer': ! wp_pf_hide_on_computer } ) }
 					/>
 				</PanelRow>
-				{hideOnMobile && hideOnTablet && hideOnComputer && (
+				{wp_pf_hide_on_mobile && wp_pf_hide_on_tablet && wp_pf_hide_on_computer && (
 					<PanelRow>
 						<p style={{ color: 'red' }}>You're hiding the block on all devices.</p>
 					</PanelRow>
@@ -118,27 +118,23 @@ addFilter(
             }
 
             // Get the current attributes
-            const { attributes, setAttributes } = props
-            const { hideOnMobile, hideOnTablet, hideOnDesktop } = attributes
+            const { attributes } = props
+            const { wp_pf_hide_on_mobile, wp_pf_hide_on_tablet, wp_pf_hide_on_computer } = attributes
 
-			// Remove all old classes.
-			let newClassName = props.className ? props.className.replaceAll(/wp-pf-hide-on-mobile|wp-pf-hide-on-tablet|wp-pf-hide-on-desktop/g, '') : ''
-
-            // Add the new classes.
-			newClassName += hideOnMobile && ' wp-pf-hide-on-mobile'
-			newClassName += hideOnTablet && ' wp-pf-hide-on-tablet'
-			newClassName += hideOnDesktop && ' wp-pf-hide-on-desktop'
-
-            // Update the className attribute
-            if (newClassName !== props.className) {
-                setAttributes({ className: newClassName })
-            }
+			let wrappedElement = <BlockEdit { ...props } />
+			if (wp_pf_hide_on_mobile || wp_pf_hide_on_tablet || wp_pf_hide_on_computer) {
+				let wrapperElementClasses = ''
+				if (wp_pf_hide_on_mobile) wrapperElementClasses += ' wp-pf-hide-on-mobile'
+				if (wp_pf_hide_on_tablet) wrapperElementClasses += ' wp-pf-hide-on-tablet'
+				if (wp_pf_hide_on_computer) wrapperElementClasses += ' wp-pf-hide-on-desktop'
+				wrappedElement = <div className={wrapperElementClasses}>{wrappedElement}</div>
+			}
 
             // Render the block edit component
             return(
 				<>
 					<Edit { ...props } />
-					<BlockEdit { ...props } className={newClassName} />
+					{wrappedElement}
 				</>
 			)
         }
