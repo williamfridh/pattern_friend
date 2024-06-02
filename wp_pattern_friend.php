@@ -20,6 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once plugin_dir_path( __FILE__ ) . 'api.php';
+require_once plugin_dir_path( __FILE__ ) . 'render.php';
 
 class WP_Pattern_Friend {
 
@@ -42,6 +43,9 @@ class WP_Pattern_Friend {
 
 		// Enqueue the admin scripts.
 		add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
+
+		// Add the filter
+		add_filter('render_block', array(__NAMESPACE__ . '\WP_Pattern_Friend_Render', 'add_device_visibility_wrapper'), 10, 2);
 
 		// Set the asset file.
 		$this->asset_file = include( plugin_dir_path( __FILE__ ) . 'build/index.asset.php');

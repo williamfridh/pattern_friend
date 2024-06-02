@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
-import { useState } from '@wordpress/element';
+import { useState } from '@wordpress/element'
+import { Panel, PanelBody, PanelRow, NumberControl, Button } from '@wordpress/components'
 
 const OptionsForm = () => {
 
@@ -38,33 +39,37 @@ const OptionsForm = () => {
 	}
 
 	return (
-		<>
+		<Panel header="WP Pattern Friend">
 
-			<h2>Options</h2>
+			<PanelBody title="Device Visibility">
 
-			<div>
-				<label>Mobile Max Threshold</label>
-				<input
-					value={mobileMaxThreshold}
-					onChange={(event) => {
-						setMobileMaxThreshold(event.target.value);
-					}}
-				/>
-			</div>
+				<PanelRow>
+					<NumberControl
+						label="Mobile Max Threshold"
+						value={mobileMaxThreshold}
+						onChange={(event) => {
+							setMobileMaxThreshold(event.target.value);
+						}}
+						min={0}
+					/>
+				</PanelRow>
 
-			<div>
-				<label>Tablet Max Threshold</label>
-				<input
-					value={tabletMaxThreshold}
-					onChange={(event) => {
-						setTabletMaxThreshold(event.target.value);
-					}}
-				/>
-			</div>
+				<PanelRow>
+					<NumberControl
+						label="Tablet Max Threshold"
+						value={tabletMaxThreshold}
+						onChange={(event) => {
+							setTabletMaxThreshold(event.target.value);
+						}}
+						min={0}
+					/>
+				</PanelRow>
 
-			<button onClick={handleSubmit}>Save</button>
+				<Button onClick={handleSubmit}>Save</Button>
+			
+			</PanelBody>
 
-		</>
+		</Panel>
 	)
 
 }

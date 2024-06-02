@@ -1,6 +1,6 @@
 import { addFilter } from '@wordpress/hooks'
 import { InspectorControls } from '@wordpress/block-editor'
-import { PanelBody, ToggleControl, PanelRow } from '@wordpress/components'
+import { Panel, PanelBody, ToggleControl, PanelRow } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { createHigherOrderComponent } from '@wordpress/compose'
 import './block-options.css'
@@ -74,34 +74,36 @@ function Edit(props) {
 
 	return (
 		<InspectorControls>
-			<PanelBody title={__("Device Visibility")}>
-				<PanelRow>
-					<ToggleControl
-						label={__("Hide on mobile")}
-						checked={ wp_pf_hide_on_mobile }
-						onChange={ () => setAttributes( { 'wp_pf_hide_on_mobile': ! wp_pf_hide_on_mobile } ) }
-					/>
-				</PanelRow>
-				<PanelRow>
-					<ToggleControl
-						label={__("Hide on tablet")}
-						checked={ wp_pf_hide_on_tablet }
-						onChange={ () => setAttributes( { 'wp_pf_hide_on_tablet': ! wp_pf_hide_on_tablet } ) }
-					/>
-				</PanelRow>
-				<PanelRow>
-					<ToggleControl
-						label={__("Hide on computer")}
-						checked={ wp_pf_hide_on_computer }
-						onChange={ () => setAttributes( { 'wp_pf_hide_on_computer': ! wp_pf_hide_on_computer } ) }
-					/>
-				</PanelRow>
-				{wp_pf_hide_on_mobile && wp_pf_hide_on_tablet && wp_pf_hide_on_computer && (
+			<Panel header="WP Pattern Friend">
+				<PanelBody title={__("Device Visibility")}>
 					<PanelRow>
-						<p style={{ color: 'red' }}>You're hiding the block on all devices.</p>
+						<ToggleControl
+							label={__("Hide on mobile")}
+							checked={ wp_pf_hide_on_mobile }
+							onChange={ () => setAttributes( { 'wp_pf_hide_on_mobile': ! wp_pf_hide_on_mobile } ) }
+						/>
 					</PanelRow>
-				)}
-			</PanelBody>
+					<PanelRow>
+						<ToggleControl
+							label={__("Hide on tablet")}
+							checked={ wp_pf_hide_on_tablet }
+							onChange={ () => setAttributes( { 'wp_pf_hide_on_tablet': ! wp_pf_hide_on_tablet } ) }
+						/>
+					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__("Hide on computer")}
+							checked={ wp_pf_hide_on_computer }
+							onChange={ () => setAttributes( { 'wp_pf_hide_on_computer': ! wp_pf_hide_on_computer } ) }
+						/>
+					</PanelRow>
+					{wp_pf_hide_on_mobile && wp_pf_hide_on_tablet && wp_pf_hide_on_computer && (
+						<PanelRow>
+							<p style={{ color: 'red' }}>You're hiding the block on all devices.</p>
+						</PanelRow>
+					)}
+				</PanelBody>
+			</Panel>
 		</InspectorControls>
 	)
 }
