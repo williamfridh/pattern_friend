@@ -2,25 +2,20 @@
 
 namespace wp_pattern_friend;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 class WP_Pattern_Friend_Render {
 
 	public static function add_device_visibility_wrapper($block_content, $block) {
-
-		// Check if the block is supported
-		if (!in_array($block['blockName'], ['core/paragraph', 'core/image'])) { // replace with your supported blocks
-			return $block_content;
-		}
 	
-		// Get the current attributes
+		// Collect attributes.
 		$attributes = $block['attrs'];
-		$wp_pf_hide_on_mobile = $attributes['wp_pf_hide_on_mobile'];
-		$wp_pf_hide_on_tablet = $attributes['wp_pf_hide_on_tablet'];
-		$wp_pf_hide_on_computer = $attributes['wp_pf_hide_on_computer'];
+		$wp_pf_hide_on_mobile = isset($attributes['wp_pf_hide_on_mobile']) ? $attributes['wp_pf_hide_on_mobile'] : false;
+		$wp_pf_hide_on_tablet = isset($attributes['wp_pf_hide_on_tablet']) ? $attributes['wp_pf_hide_on_tablet'] : false;
+		$wp_pf_hide_on_computer = isset($attributes['wp_pf_hide_on_computer']) ? $attributes['wp_pf_hide_on_computer'] : false;
 	
+		// Wrap the block content with the visibility classes based on the attributes,
+		// if any of the attributes are set to true.
 		if ($wp_pf_hide_on_mobile || $wp_pf_hide_on_tablet || $wp_pf_hide_on_computer) {
 			$wrapperElementClasses = '';
 			if ($wp_pf_hide_on_mobile) $wrapperElementClasses .= ' wp-pf-hide-on-mobile';
@@ -29,6 +24,7 @@ class WP_Pattern_Friend_Render {
 			$block_content = '<div class="' . esc_attr($wrapperElementClasses) . '">' . $block_content . '</div>';
 		}
 	
+		// Return the block content.
 		return $block_content;
 	}
 

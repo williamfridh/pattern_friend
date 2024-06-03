@@ -5,41 +5,10 @@ import { __ } from '@wordpress/i18n'
 import { createHigherOrderComponent } from '@wordpress/compose'
 import './block-options.css'
 
-// List of blocks that will be modified to include the new attributes.
-const supportedBlocks = [
-	'core/paragraph',
-	'core/heading',
-	'core/list',
-	'core/image',
-	'core/quote',
-	'core/separator',
-	'core/spacer',
-	'core/cover',
-	'core/file',
-	'core/video',
-	'core/audio',
-	'core/columns',
-	'core/column',
-	'core/button',
-	'core/media-text',
-	'core/shortcode',
-	'core/pullquote',
-	'core/table',
-	'core/preformatted',
-	'core/code',
-	'core/html',
-	'core/page-list',
-	'core/navigation',
-]
-
 // Add the new attributes to the supported blocks.
 addFilter(
 	'blocks.registerBlockType',
 	'wp-pattern-friend/modify-block-options-attributes', (settings, name) => {
-		if ( !supportedBlocks.includes(name) ) {
-			return settings
-		}
-
 		return {
 			...settings,
 			attributes: {
@@ -114,10 +83,6 @@ addFilter(
     'wp-pattern-friend/add-device-visibility-controls',
     createHigherOrderComponent( BlockEdit => {
         return props => {
-            // Check if the block is supported
-            if ( !supportedBlocks.includes(props.name) ) {
-                return <BlockEdit { ...props } />
-            }
 
             // Get the current attributes
             const { attributes } = props

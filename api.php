@@ -11,6 +11,7 @@
 
 namespace wp_pattern_friend;
 
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 class WP_Pattern_Friend_API extends \WP_REST_Controller {
 

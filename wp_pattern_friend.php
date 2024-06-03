@@ -15,16 +15,12 @@
 
 namespace wp_pattern_friend;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 require_once plugin_dir_path( __FILE__ ) . 'api.php';
 require_once plugin_dir_path( __FILE__ ) . 'render.php';
 
 class WP_Pattern_Friend {
-
-	private $asset_file;
 
 	/**
 	 * Initialize the plugin.
@@ -47,14 +43,6 @@ class WP_Pattern_Friend {
 		// Add the filter
 		add_filter('render_block', array(__NAMESPACE__ . '\WP_Pattern_Friend_Render', 'add_device_visibility_wrapper'), 10, 2);
 
-		// Set the asset file.
-		$this->asset_file = include( plugin_dir_path( __FILE__ ) . 'build/index.asset.php');
-		$additional_dependencies = array('wp-hooks', 'wp-element', 'wp-api-fetch', 'wp-compose');
-		if ( !$this->asset_file['dependencies'] ) {
-			$this->asset_file['dependencies'] = $additional_dependencies;
-		} else {
-			$this->asset_file['dependencies'] = array_merge($this->asset_file['dependencies'], $additional_dependencies);
-		}
 	}
 
 	/**
@@ -63,7 +51,7 @@ class WP_Pattern_Friend {
 	function menu_option() {
 		global $screen_id_options;
 		$screen_id_options = add_menu_page(
-			'Wp Pattern Friend Options',
+			'Wp Pattern Friend',
 			'Wp Pattern Friend',
 			'manage_options',
 			'wp_pattern_friend',
@@ -93,12 +81,14 @@ class WP_Pattern_Friend {
 	 */
 	function enqueue_block_visibility(){
 
+		$asset_file = include( plugin_dir_path( __FILE__ ) . 'build/block-options.asset.php');
+
 		// Enqueue the bundled block JS file.
 		wp_enqueue_script(
 			__NAMESPACE__ . '_script',
 			plugins_url( 'build/block-options.js', __FILE__ ),
-			$this->asset_file['dependencies'],
-			$this->asset_file['version'],
+			$asset_file['dependencies'],
+			$asset_file['version'],
 			true	
 		);
 		// Enqueue the bundled block JS file.
@@ -106,7 +96,7 @@ class WP_Pattern_Friend {
 			__NAMESPACE__ . '_style',
 			plugins_url( 'build/block-options.css', __FILE__ ),
 			array(),
-			$this->asset_file['version'],
+			$asset_file['version'],
 			'all'	
 		);
 	}
@@ -117,11 +107,16 @@ class WP_Pattern_Friend {
 	 * @return void
 	 */
 	function enqueue_admin_scripts() {
+
+		$asset_file = include( plugin_dir_path( __FILE__ ) . 'build/pages.asset.php');
+		$additional_dependencies = array('wp-hooks', 'wp-element', 'wp-api-fetch', 'wp-compose');
+		$asset_file['dependencies'] = array_merge($asset_file['dependencies'], $additional_dependencies);
+
 		wp_enqueue_script(
 			__NAMESPACE__ . '_menu_options',
 			plugins_url( 'build/pages.js', __FILE__ ),
-			$this->asset_file['dependencies'],
-			$this->asset_file['version'],
+			$asset_file['dependencies'],
+			$asset_file['version'],
 			true
 		);
 	}

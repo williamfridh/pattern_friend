@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useState } from '@wordpress/element'
-import { Panel, PanelBody, PanelRow, NumberControl, Button } from '@wordpress/components'
+import { __experimentalNumberControl as NumberControl } from '@wordpress/components';
+import { Panel, PanelBody, PanelRow, Button } from '@wordpress/components'
 
 const OptionsForm = () => {
 
@@ -50,7 +51,7 @@ const OptionsForm = () => {
 						onChange={(event) => {
 							setMobileMaxThreshold(event.target.value);
 						}}
-						min={0}
+						type="number"
 					/>
 				</PanelRow>
 
@@ -61,7 +62,7 @@ const OptionsForm = () => {
 						onChange={(event) => {
 							setTabletMaxThreshold(event.target.value);
 						}}
-						min={0}
+						type="number"
 					/>
 				</PanelRow>
 
