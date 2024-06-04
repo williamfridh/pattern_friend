@@ -57,7 +57,7 @@ class Pattern_Friend_Render {
 		$plugin_dir_path = plugin_dir_path( __FILE__ );
 
 		// Load template.
-		$css_template = @file_get_contents($plugin_dir_path . 'dynamic.template.css');
+		$css_template = wp_remote_get($plugin_dir_path . 'dynamic.template.css');
 
 		// Check if the template was loaded successfully.
 		if ($css_template === false) {
@@ -72,7 +72,7 @@ class Pattern_Friend_Render {
 		$css_template = str_replace('/*COMPUTER_MIN_THRESHOLD*/', $tablet_max_threshold + 1, $css_template);
 
 		// Save the new CSS file.
-		$result = @file_put_contents($plugin_dir_path . 'dynamic.css', $css_template);
+		$result = WP_Filesystem_Direct::put_contents($plugin_dir_path . 'dynamic.css', $css_template);
 
 		// Check if the file was saved successfully.
 		if ($result === false) {
