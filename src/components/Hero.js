@@ -1,10 +1,15 @@
+import PropTypes from 'prop-types';
+
 const Hero = () => {
     return (
-        <div class="">
-            <h1>Hero</h1>
-        </div>
+        <header className="pf-hero">
+            <p className="title">Pattern Friend</p>
+            <p className="subtitle">Extend the Default</p>
+        </header>
     );
 }
+
+Hero.propTypes = {};
 
 export default Hero;
 

@@ -1,55 +1,35 @@
-=== Wp Pattern Friend ===
-Contributors:      The WordPress Contributors
-Tags:              block
-Tested up to:      6.1
-Stable tag:        0.1.0
-License:           GPL-2.0-or-later
-License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+=== Pattern Friend ===
+Contributors: qoncer
+Tags: editor, pattern, responsive, design, layout
+Requires at least: 6.5.3
+Tested up to: 6.5.3
+Stable tag: 1.0.0
+Requires PHP: 7.3.5
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Example block scaffolded with Create Block tool.
+Extends the post, page, and theme editor by adding a block visibility option based on device type. Supports mobile, tablet, and desktop.
 
 == Description ==
 
-This is the long description. No limit, and you can use Markdown (as well as in the following sections).
+This plugin extends the editor by giving support for hiding each separate block on a certain device. It offers a span for mobile, tablet, and desktop, which can be set by the site admin on the dedicated options page found on the admin panel.
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
-
-== Installation ==
-
-This section describes how to install the plugin and get it working.
-
-e.g.
-
-1. Upload the plugin files to the `/wp-content/plugins/wp_pattern_friend` directory, or install the plugin through the WordPress plugins screen directly.
-1. Activate the plugin through the 'Plugins' screen in WordPress
-
+It's a lightweight solution that will be expanded soon to add what we deem is missing in the default WordPress Block setup.
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= Can you use this to hide a menu on mobile devices? =
 
-An answer to that question.
-
-= What about foo bar? =
-
-Answer to foo bar dilemma.
+Yes. With this plugin, you can adjust what blocks to be displayed on certain devices in the appearance editor.
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+1. The options page where the user can modify the thresholds.
+2. What the additional input fields looks like.
 
 == Changelog ==
+= v1.0.0 =
 
-= 0.1.0 =
-* Release
+* Initial release
 
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above. This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation." Arbitrary sections will be shown below the built-in sections outlined above.
+== Upgrade Notice ==

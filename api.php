@@ -7,13 +7,18 @@
  * 1. The API end points are registered using the WP_REST_Controller class.
  * 2. The API end points are registered in the 'rest_api_init' action.
  * 3. Remember to call other classes as globals since this file uses a namespace.
+ * 
+ * TODO:
+ * 1. Improve error handling.
  */
 
-namespace wp_pattern_friend;
+namespace pattern_friend;
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-class WP_Pattern_Friend_API extends \WP_REST_Controller {
+require_once plugin_dir_path( __FILE__ ) . 'render.php';
+
+class Pattern_Friend_API extends \WP_REST_Controller {
 
 	/**
 	 * The namespace and version for the REST API endpoint.
@@ -93,8 +98,11 @@ class WP_Pattern_Friend_API extends \WP_REST_Controller {
 		update_option( 'mobile_max_threshold', $mobile_max_threshold );
 		update_option( 'tablet_max_threshold', $tablet_max_threshold );
 
-		$response = new \WP_REST_Response( 'Data successfully added.', '200' );
+		// Generate new CSS.
+		Pattern_Friend_Render::dynamic_css_file($mobile_max_threshold, $tablet_max_threshold);
 
+		// Prepare the response.
+		$response = new \WP_REST_Response( 'Data successfully added.', '200' );
 		return $response;
 
 	}

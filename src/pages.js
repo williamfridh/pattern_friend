@@ -1,7 +1,10 @@
-const {render} = wp.element;
-import App from './App';
+const {render} = wp.element
+import App from './App'
+import './styles/pages.css'
 
-if (document.getElementById('my-react-app')) {
-    render(<App/>, document.getElementById('my-react-app'));
+const appElement = document.getElementById('pf-react-app');
+
+if (appElement) {
+    render(<App />, appElement);
 }
 

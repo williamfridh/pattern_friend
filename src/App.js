@@ -1,14 +1,17 @@
+// Importing required components
+import Hero from './components/Hero'
 import OptionsForm from './components/OptionsForm'
 
+// App component
 const App = () => {
-
-	return (
-		<>
-			<h1>WP Pattern Friend</h1>
-			<OptionsForm />
-		</>
-	)
-
+    // Rendering Hero and OptionsForm components
+    return (
+        <>
+            <Hero />
+            <OptionsForm />
+        </>
+    )
 }
+
 export default App
 

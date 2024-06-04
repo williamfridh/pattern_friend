@@ -1,0 +1,36 @@
+/**
+* NOTES:
+* - Each class should start with "pf-" to avoid conflicts with other CSS.
+*/
+
+/**
+* Variables
+*/
+:root {
+    --pf-primary-color: #51829B;
+    --pf-secondary-color: #F6995C;
+    --pf-tertiary-color: #9BB0C1;
+    --pf-extra-color: #EADFB4;
+}
+
+/**
+* Admin Panel.
+*/
+.pf-hero {
+    padding: 40px 0;
+    text-align: center;
+    background: var(--pf-primary-color);
+}
+.pf-hero > p {
+    color: white;
+    padding: 0;
+    margin: 0;
+}
+.pf-hero > p.title {
+    font-size: 2.5em;
+    font-weight: bold;
+}
+.pf-hero > p.subtitle {
+    font-size: 1em;
+    font-weight: bold;
+}

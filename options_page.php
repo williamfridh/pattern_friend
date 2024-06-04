@@ -1,5 +1,6 @@
 <?php
 
+// Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 // Check if user has permission to access this page.
@@ -9,7 +10,8 @@ if (!current_user_can('manage_options')) {
 
 ?>
 
+<!-- Start of the options page -->
 <div class="wrap">
-    <div id="my-react-app"></div>
+    <!-- React app root -->
+    <div id="pf-react-app"></div>
 </div>
-

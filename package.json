@@ -1,8 +1,8 @@
 {
-	"name": "wp_pattern_friend",
-	"version": "0.1.0",
-	"description": "Example block scaffolded with Create Block tool.",
-	"author": "The WordPress Contributors",
+	"name": "pattern_friend",
+	"version": "1.0.0",
+	"description": "A plugin made to extend the default editor.",
+	"author": "qoncer",
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",
 	"scripts": {
@@ -16,5 +16,8 @@
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^27.9.0"
+	},
+	"dependencies": {
+		"@wordpress/components": "^28.0.0"
 	}
 }

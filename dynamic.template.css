@@ -1,0 +1,25 @@
+/**
+* CSS related to front-end.
+*
+* NOTES:
+* - Each class should start with "pf-" to avoid conflicts with other CSS.
+*/
+
+@media only screen and (max-width: /*MOBILE_MAX_THRESHOLD*/px) {
+    .pf-hide-on-mobile {
+        display: none !important;
+    }
+}
+
+@media only screen and (min-width: /*TABLET_MIN_THRESHOLD*/px) and (max-width: /*TABLET_MAX_THRESHOLD*/px) {
+    .pf-hide-on-tablet {
+        display: none !important;
+    }
+}
+
+@media only screen and (min-width: /*COMPUTER_MIN_THRESHOLD*/px) {
+    .pf-hide-on-desktop {
+        display: none !important;
+    }
+}
+

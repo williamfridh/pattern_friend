@@ -3,7 +3,7 @@ import { InspectorControls } from '@wordpress/block-editor'
 import { Panel, PanelBody, ToggleControl, PanelRow } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { createHigherOrderComponent } from '@wordpress/compose'
-import './block-options.css'
+import { Notice } from '@wordpress/components'
 
 // Add the new attributes to the supported blocks.
 addFilter(
@@ -13,15 +13,15 @@ addFilter(
 			...settings,
 			attributes: {
 				...settings.attributes,
-				'wp_pf_hide_on_mobile': {
+				'pf_hide_on_mobile': {
 					type: 'boolean',
 					default: false,
 				},
-				'wp_pf_hide_on_tablet': {
+				'pf_hide_on_tablet': {
 					type: 'boolean',
 					default: false,
 				},
-				'wp_pf_hide_on_computer': {
+				'pf_hide_on_computer': {
 					type: 'boolean',
 					default: false,
 				},
@@ -34,41 +34,41 @@ addFilter(
 function Edit(props) {
 	const {
 		attributes: {
-			'wp_pf_hide_on_mobile': wp_pf_hide_on_mobile,
-			'wp_pf_hide_on_tablet': wp_pf_hide_on_tablet,
-			'wp_pf_hide_on_computer': wp_pf_hide_on_computer,
+			'pf_hide_on_mobile': pf_hide_on_mobile,
+			'pf_hide_on_tablet': pf_hide_on_tablet,
+			'pf_hide_on_computer': pf_hide_on_computer,
 		},
 		setAttributes,
 	} = props
 
 	return (
 		<InspectorControls>
-			<Panel header="WP Pattern Friend">
+			<Panel header="Pattern Friend">
 				<PanelBody title={__("Device Visibility")}>
 					<PanelRow>
 						<ToggleControl
 							label={__("Hide on mobile")}
-							checked={ wp_pf_hide_on_mobile }
-							onChange={ () => setAttributes( { 'wp_pf_hide_on_mobile': ! wp_pf_hide_on_mobile } ) }
+							checked={ pf_hide_on_mobile }
+							onChange={ () => setAttributes( { 'pf_hide_on_mobile': ! pf_hide_on_mobile } ) }
 						/>
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
 							label={__("Hide on tablet")}
-							checked={ wp_pf_hide_on_tablet }
-							onChange={ () => setAttributes( { 'wp_pf_hide_on_tablet': ! wp_pf_hide_on_tablet } ) }
+							checked={ pf_hide_on_tablet }
+							onChange={ () => setAttributes( { 'pf_hide_on_tablet': ! pf_hide_on_tablet } ) }
 						/>
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
 							label={__("Hide on computer")}
-							checked={ wp_pf_hide_on_computer }
-							onChange={ () => setAttributes( { 'wp_pf_hide_on_computer': ! wp_pf_hide_on_computer } ) }
+							checked={ pf_hide_on_computer }
+							onChange={ () => setAttributes( { 'pf_hide_on_computer': ! pf_hide_on_computer } ) }
 						/>
 					</PanelRow>
-					{wp_pf_hide_on_mobile && wp_pf_hide_on_tablet && wp_pf_hide_on_computer && (
+					{pf_hide_on_mobile && pf_hide_on_tablet && pf_hide_on_computer && (
 						<PanelRow>
-							<p style={{ color: 'red' }}>You're hiding the block on all devices.</p>
+							<Notice status="warning" isDismissible={false}>You're hiding the block on all devices.</Notice>
 						</PanelRow>
 					)}
 				</PanelBody>
@@ -86,14 +86,15 @@ addFilter(
 
             // Get the current attributes
             const { attributes } = props
-            const { wp_pf_hide_on_mobile, wp_pf_hide_on_tablet, wp_pf_hide_on_computer } = attributes
+            const { pf_hide_on_mobile, pf_hide_on_tablet, pf_hide_on_computer } = attributes
 
 			let wrappedElement = <BlockEdit { ...props } />
-			if (wp_pf_hide_on_mobile || wp_pf_hide_on_tablet || wp_pf_hide_on_computer) {
-				let wrapperElementClasses = ''
-				if (wp_pf_hide_on_mobile) wrapperElementClasses += ' wp-pf-hide-on-mobile'
-				if (wp_pf_hide_on_tablet) wrapperElementClasses += ' wp-pf-hide-on-tablet'
-				if (wp_pf_hide_on_computer) wrapperElementClasses += ' wp-pf-hide-on-desktop'
+			if (pf_hide_on_mobile || pf_hide_on_tablet || pf_hide_on_computer) {
+				let wrapperElementClasses = `
+					${pf_hide_on_mobile ? ' pf-hide-on-mobile' : ''}
+					${pf_hide_on_tablet ? ' pf-hide-on-tablet' : ''}
+					${pf_hide_on_computer ? ' pf-hide-on-desktop' : ''}
+					`
 				wrappedElement = <div className={wrapperElementClasses}>{wrappedElement}</div>
 			}
 
