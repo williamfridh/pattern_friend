@@ -3,6 +3,8 @@
 * - Each class should start with "pf-" to avoid conflicts with other CSS.
 */
 
+@import url('wordpress.components.css');
+
 /**
 * Variables
 */

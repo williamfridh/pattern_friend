@@ -14,14 +14,14 @@
  * 1. Improve error handling.
  */
 
-namespace pattern_friend;
+namespace PatternFriend;
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-if ( ! @include_once( plugin_dir_path( __FILE__ ) . 'api.php' ) ) {
+if ( ! @include_once( plugin_dir_path( __FILE__ ) . 'Routes.php' ) ) {
     // Handle error...
 }
-if ( ! @include_once( plugin_dir_path( __FILE__ ) . 'render.php' ) ) {
+if ( ! @include_once( plugin_dir_path( __FILE__ ) . 'Renderer.php' ) ) {
     // Handle error...
 }
 
@@ -32,18 +32,20 @@ class Pattern_Friend {
 
 	/**
 	 * Initialize the plugin.
+	 * 
+	 * Register the menu option, API endpoints, and enqueue the block assets.
 	 */
 	public function __construct() {
 		
 		// Add the menu option to the admin menu.
-		add_action('admin_menu', array($this, 'menu_option'));
+		add_action('admin_menu', [$this, 'menu_option']);
 
 		// Add the API endpoints when the REST API is initialized.
-		add_action('rest_api_init', array($this, 'activate_pattern_friend_api'));
+		add_action('rest_api_init', [$this, 'activate_routes']);
 
 		// Enqueue the block assets for both viewing and editing.
-		add_action('enqueue_block_assets', array($this, 'enqueue_block_visibility'));
-		add_action('enqueue_block_editor_assets', array($this, 'enqueue_block_visibility'));
+		add_action('enqueue_block_assets', [$this, 'enqueue_block_visibility']);
+		add_action('enqueue_block_editor_assets', [$this, 'enqueue_block_visibility']);
 
 		// Enqueue the admin scripts.
 		$page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -52,7 +54,7 @@ class Pattern_Friend {
 		}
 
 		// Add the filter
-		add_filter('render_block', array(__NAMESPACE__ . '\Pattern_Friend_Render', 'device_visibility_wrapper'), 10, 2);
+		add_filter('render_block', [__NAMESPACE__ . '\Renderer', 'device_visibility_wrapper'], 10, 2);
 
 		// Register the activation hook.
 		register_activation_hook(__FILE__, [$this, 'activation']);
@@ -64,12 +66,13 @@ class Pattern_Friend {
 	 */
 	function menu_option() {
 		global $screen_id_options;
-		$screen_id_options = add_menu_page(
+		$screen_id_options = add_submenu_page(
+			'themes.php',
 			'Pattern Friend',
 			'Pattern Friend',
 			'manage_options',
 			'pattern_friend',
-			array($this, 'options_page'),
+			[$this, 'options_page'],
 		);
 	}
 
@@ -79,15 +82,15 @@ class Pattern_Friend {
 	function options_page() {
 		add_option('mobile_max_threshold', DEFAULT_MOBILE_MAX_THRESHOLD);
 		add_option('tablet_max_threshold', DEFAULT_TABLET_MAX_THRESHOLD);
-		include_once( 'options_page.php' );
+		include_once( 'pages/options.php' );
 	}
 
 	/**
-	 * Register API endpoints.
+	 * Register API endpoints/routes.
 	 */
-	function activate_pattern_friend_api() {
-		$api = new Pattern_Friend_API();
-		$api->register_routes();
+	function activate_routes() {
+		$api = new Routes();
+		$api->register();
 	}
 
 	/**
@@ -109,8 +112,8 @@ class Pattern_Friend {
 		// Enqueue the bundled block JS file.
 		wp_enqueue_style(
 			__NAMESPACE__ . '_style',
-			plugins_url( 'dynamic.css', __FILE__ ),
-			array(),
+			plugins_url( 'styles/dynamic.css', __FILE__ ),
+			[],
 			$asset_file['version'],
 			'all'	
 		);
@@ -124,7 +127,7 @@ class Pattern_Friend {
 	function enqueue_page_scripts() {
 
 		$asset_file = include( plugin_dir_path( __FILE__ ) . 'build/pages.asset.php');
-		$additional_dependencies = array('wp-hooks', 'wp-element', 'wp-api-fetch', 'wp-compose');
+		$additional_dependencies = ['wp-hooks', 'wp-element', 'wp-api-fetch', 'wp-compose'];
 		$asset_file['dependencies'] = array_merge($asset_file['dependencies'], $additional_dependencies);
 
 		// Enqueue the bundled block JS file.
@@ -140,18 +143,9 @@ class Pattern_Friend {
 		wp_enqueue_style(
 			__NAMESPACE__ . '_page_style',
 			plugins_url( 'build/pages.css', __FILE__ ),
-			array(),
+			[],
 			$asset_file['version'],
 			'all'	
-		);
-
-		// Enqueue the WordPress components CSS file.
-		wp_enqueue_style(
-			__NAMESPACE__ . '_wordpress_components_style',
-			plugins_url( 'node_modules/@wordpress/components/build-style/style.css', __FILE__ ),
-			array(),
-			$asset_file['version'],
-			'all'    
 		);
 
 	}
@@ -170,9 +164,9 @@ class Pattern_Friend {
 		 * 	
 		 * This file is used to store the dynamic CSS for the block.
 		 */
-		$dyammic_css = plugin_dir_path( __FILE__ ) . 'dynamic.css';
-		if (!file_exists($dyammic_css)) {
-			Pattern_Friend_Render::dynamic_css_file(DEFAULT_MOBILE_MAX_THRESHOLD, DEFAULT_TABLET_MAX_THRESHOLD);
+		$css_generator = new \PatternFriend\CSSGenerator();
+		if ( ! $css_generator->file_exists() ) {
+			$css_generator->generate(DEFAULT_MOBILE_MAX_THRESHOLD, DEFAULT_TABLET_MAX_THRESHOLD);
 		}
 	}
 

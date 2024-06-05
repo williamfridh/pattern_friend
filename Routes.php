@@ -12,13 +12,13 @@
  * 1. Improve error handling.
  */
 
-namespace pattern_friend;
+namespace PatternFriend;
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-require_once plugin_dir_path( __FILE__ ) . 'render.php';
+require_once plugin_dir_path( __FILE__ ) . 'CSSGenerator.php';
 
-class Pattern_Friend_API extends \WP_REST_Controller {
+class Routes extends \WP_REST_Controller {
 
 	/**
 	 * The namespace and version for the REST API endpoint.
@@ -41,7 +41,7 @@ class Pattern_Friend_API extends \WP_REST_Controller {
 	 * 
 	 * @return void
 	 */
-	public function register_routes() {
+	public function register() {
 
 		//Add the GET 'wp-pattern-friend/v1/options' endpoint to the Rest API.
 		register_rest_route(
@@ -99,7 +99,8 @@ class Pattern_Friend_API extends \WP_REST_Controller {
 		update_option( 'tablet_max_threshold', $tablet_max_threshold );
 
 		// Generate new CSS.
-		Pattern_Friend_Render::dynamic_css_file($mobile_max_threshold, $tablet_max_threshold);
+		$css_generator = new \PatternFriend\CSSGenerator();
+		$css_generator->generate($mobile_max_threshold, $tablet_max_threshold);
 
 		// Prepare the response.
 		$response = new \WP_REST_Response( 'Data successfully added.', '200' );
