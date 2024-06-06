@@ -67,9 +67,10 @@ class CSSGenerator {
 	 * 
 	 * @param int $mobile_max_threshold The mobile max threshold.
 	 * @param int $tablet_max_threshold The tablet max threshold.
+	 * @param bool $header_sticky The header sticky option.
 	 * @return void
 	 */
-	public function generate($mobile_max_threshold, $tablet_max_threshold) {
+	public function generate($mobile_max_threshold, $tablet_max_threshold, $header_sticky) {
 
 		if ( $this->wp_filesystem->exists( $this->template_file_path ) ) {
 			// Get the contents of the file.
@@ -82,11 +83,22 @@ class CSSGenerator {
 			// Handle the error if the file does not exist.
 		}
 
-		// Replace placeholders with actual values.
+		// Replace placeholders with actual values & CSS.
 		$file_content = str_replace('/*MOBILE_MAX_THRESHOLD*/', $mobile_max_threshold, $file_content);
 		$file_content = str_replace('/*TABLET_MIN_THRESHOLD*/', $mobile_max_threshold + 1, $file_content);
 		$file_content = str_replace('/*TABLET_MAX_THRESHOLD*/', $tablet_max_threshold, $file_content);
 		$file_content = str_replace('/*COMPUTER_MIN_THRESHOLD*/', $tablet_max_threshold + 1, $file_content);
+
+		if ( $header_sticky == '1') {
+			$header_sticky_css = "
+			.wp-site-blocks > header {
+				position: sticky;
+				top: 0;
+				z-index: 1000;
+			}
+			";
+			$file_content = str_replace('/*HEADER_STICKY*/', $header_sticky_css, $file_content);
+		}
 
 		// Save the new CSS file.
 		if ( ! $this->wp_filesystem->put_contents($this->target_file_path, $file_content) ) {

@@ -4,7 +4,7 @@
  * Description:       Extends the post, page, and theme editor by adding a block visibility option based on device type. Supports mobile, tablet, and desktop.
  * Requires at least: 6.5.3
  * Requires PHP:      7.3.5
- * Version:           1.0.0
+ * Version:           1.1.0
  * Author:            William Fridh
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -27,6 +27,7 @@ if ( ! @include_once( plugin_dir_path( __FILE__ ) . 'Renderer.php' ) ) {
 
 const DEFAULT_MOBILE_MAX_THRESHOLD = 600;
 const DEFAULT_TABLET_MAX_THRESHOLD = 1024;
+const DEFAULT_HEADER_STICKY = false;
 
 class Pattern_Friend {
 
@@ -43,7 +44,7 @@ class Pattern_Friend {
 		// Add the API endpoints when the REST API is initialized.
 		add_action('rest_api_init', [$this, 'activate_routes']);
 
-		// Enqueue the block assets for both viewing and editing.
+		// Enqueue the block visibility assets for both viewing and editing.
 		add_action('enqueue_block_assets', [$this, 'enqueue_block_visibility']);
 		add_action('enqueue_block_editor_assets', [$this, 'enqueue_block_visibility']);
 
@@ -80,8 +81,9 @@ class Pattern_Friend {
 	 * Generate options page and set default values.
 	 */
 	function options_page() {
-		add_option('mobile_max_threshold', DEFAULT_MOBILE_MAX_THRESHOLD);
-		add_option('tablet_max_threshold', DEFAULT_TABLET_MAX_THRESHOLD);
+		add_option('pf_mobile_max_threshold', DEFAULT_MOBILE_MAX_THRESHOLD);
+		add_option('pf_tablet_max_threshold', DEFAULT_TABLET_MAX_THRESHOLD);
+		add_option('pf_header_sticky', DEFAULT_HEADER_STICKY);
 		include_once( 'pages/options.php' );
 	}
 
@@ -98,12 +100,12 @@ class Pattern_Friend {
 	 */
 	function enqueue_block_visibility(){
 
-		$asset_file = include( plugin_dir_path( __FILE__ ) . 'build/block-options.asset.php');
+		$asset_file = include( plugin_dir_path( __FILE__ ) . 'build/block-visibility.asset.php');
 
 		// Enqueue the bundled block JS file.
 		wp_enqueue_script(
 			__NAMESPACE__ . '_script',
-			plugins_url( 'build/block-options.js', __FILE__ ),
+			plugins_url( 'build/block-visibility.js', __FILE__ ),
 			$asset_file['dependencies'],
 			$asset_file['version'],
 			true	
@@ -166,7 +168,7 @@ class Pattern_Friend {
 		 */
 		$css_generator = new \PatternFriend\CSSGenerator();
 		if ( ! $css_generator->file_exists() ) {
-			$css_generator->generate(DEFAULT_MOBILE_MAX_THRESHOLD, DEFAULT_TABLET_MAX_THRESHOLD);
+			$css_generator->generate(DEFAULT_MOBILE_MAX_THRESHOLD, DEFAULT_TABLET_MAX_THRESHOLD, DEFAULT_HEADER_STICKY);
 		}
 	}
 

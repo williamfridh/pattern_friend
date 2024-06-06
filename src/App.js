@@ -1,14 +1,18 @@
 // Importing required components
 import Hero from './components/Hero'
-import OptionsForm from './components/OptionsForm'
+import DeviceVisibilityThresholdsForm from './components/DeviceVisibilityThresholdsForm'
+import HeaderFooterForm from './components/HeaderFooterForm'
+import { Panel } from '@wordpress/components'
 
 // App component
 const App = () => {
-    // Rendering Hero and OptionsForm components
     return (
         <>
             <Hero />
-            <OptionsForm />
+            <Panel header="Options">
+                <DeviceVisibilityThresholdsForm />
+                <HeaderFooterForm />
+            </Panel>
         </>
     )
 }

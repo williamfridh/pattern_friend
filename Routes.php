@@ -32,7 +32,7 @@ class Routes extends \WP_REST_Controller {
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->version = '1';
+		$this->version = '2';
 		$this->namespace = 'wp-pattern-friend/v' . $this->version;
 	}
 
@@ -43,37 +43,51 @@ class Routes extends \WP_REST_Controller {
 	 */
 	public function register() {
 
-		//Add the GET 'wp-pattern-friend/v1/options' endpoint to the Rest API.
+		// Block visibility options.
 		register_rest_route(
-			$this->namespace, '/' . 'options', array(
+			$this->namespace, '/options/block_visibility', array(
 				'methods'               => \WP_REST_Server::READABLE,
-				'callback'              => array($this, 'get_options'),
+				'callback'              => array($this, 'get_options_block_visibility'),
 				'permission_callback'   => array($this, 'get_items_permissions_check')
 			)
 		);
-
-		//Add the POST 'react_options_page/v1/options' endpoint to the Rest API.
 		register_rest_route(
-			$this->namespace, '/' . 'options', array(
+			$this->namespace, '/options/block_visibility', array(
 				'methods'               => \WP_REST_Server::EDITABLE,
-				'callback'              => array($this, 'update_options'),
+				'callback'              => array($this, 'update_options_block_visibility'),
+				'permission_callback'   => array($this, 'update_item_permissions_check')
+			)
+		);
+
+		// Header and footer options.
+		register_rest_route(
+			$this->namespace, '/options/header_footer', array(
+				'methods'               => \WP_REST_Server::READABLE,
+				'callback'              => array($this, 'get_options_header_footer'),
+				'permission_callback'   => array($this, 'get_items_permissions_check')
+			)
+		);
+		register_rest_route(
+			$this->namespace, '/options/header_footer', array(
+				'methods'               => \WP_REST_Server::EDITABLE,
+				'callback'              => array($this, 'update_options_header_footer'),
 				'permission_callback'   => array($this, 'update_item_permissions_check')
 			)
 		);
 	}
 
 	/*
-	* Callback for the get options endpoint.
+	* Callback for the get options block visibility endpoint.
 	*
 	* @param WP_REST_Request $request Full data about the request.
 	* @return WP_Error|WP_REST_Response
 	*/
-	public function get_options(\WP_REST_Request $request) {
+	public function get_options_block_visibility(\WP_REST_Request $request) {
 
 		// Generate the response.
 		$response = [];
-		$response['mobile_max_threshold'] = get_option('mobile_max_threshold');
-		$response['tablet_max_threshold'] = get_option('tablet_max_threshold');
+		$response['pf_mobile_max_threshold'] = get_option('pf_mobile_max_threshold');
+		$response['pf_tablet_max_threshold'] = get_option('pf_tablet_max_threshold');
 
 		// Prepare the response.
 		$response = new \WP_REST_Response($response);
@@ -83,24 +97,76 @@ class Routes extends \WP_REST_Controller {
 	}
 
 	/**
-	 * Callback for the update options endpoint.
+	 * Callback for the update device visibility options endpoint.
 	 * 
 	 * @param WP_REST_Request $request Full data about the request.
 	 * @return WP_Error|WP_REST_Response
 	 */
-	public function update_options( \WP_REST_Request $request ) {
+	public function update_options_block_visibility( \WP_REST_Request $request ) {
 
 		// Get the data and sanitize.
-		$mobile_max_threshold = absint( $request->get_param( 'mobile_max_threshold' ) );
-		$tablet_max_threshold = absint( $request->get_param( 'tablet_max_threshold' ) );
+		$pf_mobile_max_threshold = absint( $request->get_param( 'pf_mobile_max_threshold' ) );
+		$pf_tablet_max_threshold = absint( $request->get_param( 'pf_tablet_max_threshold' ) );
 
 		// Update the options.
-		update_option( 'mobile_max_threshold', $mobile_max_threshold );
-		update_option( 'tablet_max_threshold', $tablet_max_threshold );
+		update_option( 'pf_mobile_max_threshold', $pf_mobile_max_threshold );
+		update_option( 'pf_tablet_max_threshold', $pf_tablet_max_threshold );
 
 		// Generate new CSS.
+		$this->generate_css();
+
+		// Prepare the response.
+		$response = new \WP_REST_Response( 'Data successfully added.', '200' );
+		return $response;
+
+	}
+
+	/*
+	* Callback for the get header and footer options endpoint.
+	*
+	* @param WP_REST_Request $request Full data about the request.
+	* @return WP_Error|WP_REST_Response
+	*/
+	public function get_options_header_footer(\WP_REST_Request $request) {
+
+		// Generate the response.
+		$response = [];
+		$response['pf_header_sticky'] = get_option('pf_header_sticky');
+
+		// Generate new CSS.
+		$this->generate_css();
+
+		// Prepare the response.
+		$response = new \WP_REST_Response($response);
+		return $response;
+
+	}
+
+	/**
+	 * Call CSS Generator to generate new CSS.
+	 */
+	private function generate_css() {
+		$pf_mobile_max_threshold = get_option('pf_mobile_max_threshold');
+		$pf_tablet_max_threshold = get_option('pf_tablet_max_threshold');
+		$pf_header_sticky = get_option('pf_header_sticky');
+
 		$css_generator = new \PatternFriend\CSSGenerator();
-		$css_generator->generate($mobile_max_threshold, $tablet_max_threshold);
+		$css_generator->generate($pf_mobile_max_threshold, $pf_tablet_max_threshold, $pf_header_sticky);
+	}
+
+	/**
+	 * Callback for the update header and footer options endpoint.
+	 * 
+	 * @param WP_REST_Request $request Full data about the request.
+	 * @return WP_Error|WP_REST_Response
+	 */
+	public function update_options_header_footer( \WP_REST_Request $request ) {
+
+		// Get the data and sanitize.
+		$pf_header_sticky = absint( $request->get_param( 'pf_header_sticky' ) );
+
+		// Update the options.
+		update_option( 'pf_header_sticky', $pf_header_sticky );
 
 		// Prepare the response.
 		$response = new \WP_REST_Response( 'Data successfully added.', '200' );

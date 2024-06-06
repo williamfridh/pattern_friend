@@ -3,7 +3,7 @@ Contributors: qoncer
 Tags: editor, pattern, responsive, design, layout
 Requires at least: 6.5.3
 Tested up to: 6.5.3
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 Requires PHP: 7.3.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -28,8 +28,14 @@ Yes. With this plugin, you can adjust what blocks to be displayed on certain dev
 2. What the additional input fields looks like.
 
 == Changelog ==
-= v1.0.0 =
 
+= v1.1.0 =
+* Added sticky header support.
+
+= v1.0.0 =
 * Initial release
 
 == Upgrade Notice ==
+
+= v1.1.0 =
+* Additional functionality.

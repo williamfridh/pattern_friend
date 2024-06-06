@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 import { useState } from '@wordpress/element'
 import { __experimentalNumberControl as NumberControl } from '@wordpress/components';
-import { Panel, PanelBody, PanelRow, Button, Notice } from '@wordpress/components'
+import { PanelBody, PanelRow, Button, Notice } from '@wordpress/components'
 import SaveIcon from '../icons/save.svg';
 
-const OptionsForm = () => {
+const DeviceVisibilityThresholdsForm = () => {
 
 	const [mobileMaxThreshold, setMobileMaxThreshold] = useState('')
 	const [tabletMaxThreshold, setTabletMaxThreshold] = useState('')
@@ -16,11 +16,11 @@ const OptionsForm = () => {
 		 * Initialize the options fields with the data received from the REST API
 		 * endpoint provided by the plugin.
 		 */
-		wp.apiFetch({path: '/wp-pattern-friend/v1/options'}).
+		wp.apiFetch({path: '/wp-pattern-friend/v2/options/block_visibility'}).
 			then(data => {
 					//Set the new values of the options in the state
-					setMobileMaxThreshold(data['mobile_max_threshold'])
-					setTabletMaxThreshold(data['tablet_max_threshold'])
+					setMobileMaxThreshold(data['pf_mobile_max_threshold'])
+					setTabletMaxThreshold(data['pf_tablet_max_threshold'])
 				},
 			);
 	}, [])
@@ -51,11 +51,11 @@ const OptionsForm = () => {
 	 */
 	const handleSubmit = () => {
 		wp.apiFetch({
-			path: '/wp-pattern-friend/v1/options',
+			path: '/wp-pattern-friend/v2/options/block_visibility',
 			method: 'POST',
 			data: {
-				'mobile_max_threshold': mobileMaxThreshold,
-				'tablet_max_threshold': tabletMaxThreshold,
+				'pf_mobile_max_threshold': mobileMaxThreshold,
+				'pf_tablet_max_threshold': tabletMaxThreshold,
 			},
 		}).then(data => {
 			alert('Options saved successfully!')
@@ -63,13 +63,12 @@ const OptionsForm = () => {
 	}
 
 	return (
-		<Panel header="Options">
-
 			<PanelBody title="Device Visibility Thresholds">
 
 				<PanelRow>
 					<NumberControl
 						label="Mobile Max Threshold"
+						help="The maximum width in pixels for mobile devices."
 						value={mobileMaxThreshold}
 						onChange={handleMobileMaxThresholdChange}
 						type="number"
@@ -79,6 +78,7 @@ const OptionsForm = () => {
 				<PanelRow>
 					<NumberControl
 						label="Tablet Max Threshold"
+						help="The maximum width in pixels for tablet devices."
 						value={tabletMaxThreshold}
 						onChange={handleTabletMaxThresholdChange}
 						type="number"
@@ -93,10 +93,8 @@ const OptionsForm = () => {
 				{error !== '' && <PanelRow><Notice status="error">{error}</Notice></PanelRow>}
 			
 			</PanelBody>
-
-		</Panel>
 	)
 
 }
-export default OptionsForm
+export default DeviceVisibilityThresholdsForm
 

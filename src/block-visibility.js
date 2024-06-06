@@ -1,6 +1,6 @@
 import { addFilter } from '@wordpress/hooks'
 import { InspectorControls } from '@wordpress/block-editor'
-import { Panel, PanelBody, ToggleControl, PanelRow } from '@wordpress/components'
+import { Panel, PanelBody, ToggleControl, PanelRow, SelectControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { createHigherOrderComponent } from '@wordpress/compose'
 import { Notice } from '@wordpress/components'
@@ -8,7 +8,7 @@ import { Notice } from '@wordpress/components'
 // Add the new attributes to the supported blocks.
 addFilter(
 	'blocks.registerBlockType',
-	'wp-pattern-friend/modify-block-options-attributes', (settings, name) => {
+	'wp-pattern-friend/modify-block-visibility-attributes', (settings, name) => {
 		return {
 			...settings,
 			attributes: {
@@ -30,8 +30,10 @@ addFilter(
 	}
 )
 
-// Generate the block edit function.
-function Edit(props) {
+/**
+ * Generate block device visibility form.
+ */
+function VisibilityForm(props) {
 	const {
 		attributes: {
 			'pf_hide_on_mobile': pf_hide_on_mobile,
@@ -42,8 +44,6 @@ function Edit(props) {
 	} = props
 
 	return (
-		<InspectorControls>
-			<Panel header="Pattern Friend">
 				<PanelBody title={__("Device Visibility")}>
 					<PanelRow>
 						<ToggleControl
@@ -72,8 +72,6 @@ function Edit(props) {
 						</PanelRow>
 					)}
 				</PanelBody>
-			</Panel>
-		</InspectorControls>
 	)
 }
 
@@ -101,7 +99,11 @@ addFilter(
             // Render the block edit component
             return(
 				<>
-					<Edit { ...props } />
+					<InspectorControls>
+						<Panel header="Pattern Friend">
+							<VisibilityForm { ...props } />
+						</Panel>
+					</InspectorControls>
 					{wrappedElement}
 				</>
 			)
