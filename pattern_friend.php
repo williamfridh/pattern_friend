@@ -56,6 +56,7 @@ class Pattern_Friend {
 
 		// Add the filter
 		add_filter('render_block', [__NAMESPACE__ . '\Renderer', 'device_visibility_wrapper'], 10, 2);
+		add_filter('render_block', [__NAMESPACE__ . '\Renderer', 'hideable'], 10, 2);
 
 		// Register the activation hook.
 		register_activation_hook(__FILE__, [$this, 'activation']);

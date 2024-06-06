@@ -174,6 +174,10 @@ __webpack_require__.r(__webpack_exports__);
       'pf_hide_on_computer': {
         type: 'boolean',
         default: false
+      },
+      'pf_hidable': {
+        type: 'boolean',
+        default: false
       }
     }
   };
@@ -217,6 +221,28 @@ function VisibilityForm(props) {
   }, "You're hiding the block on all devices.")));
 }
 
+/**
+ * Generate form for setting hidable settings.
+ */
+function HidableSettingsForm(props) {
+  const {
+    attributes: {
+      'pf_hidable': pf_hidable
+    },
+    setAttributes
+  } = props;
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Hidable Settings")
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Hidable"),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Allow the user to hide this block."),
+    checked: pf_hidable,
+    onChange: () => setAttributes({
+      'pf_hidable': !pf_hidable
+    })
+  })));
+}
+
 // Add the new attributes to the block edit component.
 (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__.addFilter)('editor.BlockEdit', 'wp-pattern-friend/add-device-visibility-controls', (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_5__.createHigherOrderComponent)(BlockEdit => {
   return props => {
@@ -247,6 +273,8 @@ function VisibilityForm(props) {
     return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Panel, {
       header: "Pattern Friend"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(VisibilityForm, {
+      ...props
+    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(HidableSettingsForm, {
       ...props
     }))), wrappedElement);
   };

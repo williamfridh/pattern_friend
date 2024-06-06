@@ -5,6 +5,9 @@
 * - Each class should start with "pf-" to avoid conflicts with other CSS.
 */
 
+/**
+* Hide elements based on screen size.
+*/
 @media only screen and (max-width: /*MOBILE_MAX_THRESHOLD*/px) {
     .pf-hide-on-mobile {
         display: none !important;
@@ -22,5 +25,20 @@
         display: none !important;
     }
 }
+
+/**
+* Hideable elements.
+*/
+.pf-hideable {
+}
+.pf-hideable.pf-hideable-closed {
+    display: none !important;
+}
+.pf-hideable-button {
+}
+
+/**
+* Other.
+*/
 
 /*HEADER_STICKY*/

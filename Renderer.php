@@ -46,5 +46,22 @@ class Renderer {
 		return $block_content;
 	}
 
+	/**
+	 * Add the hideable wrapper to the block content.
+	 * 
+	 * @param string $block_content The block content.
+	 * @param array $block The block.
+	 * @return string The block content.
+	 */
+	public static function hideable($block_content, $block) {
+		$attributes = $block['attrs'];
+		$pf_hidable = isset($attributes['pf_hidable']) ? $attributes['pf_hidable'] : false;
+		if ($pf_hidable) {
+			$close_button = '<div class="pf-hideable-button">x</div>';
+			$block_content = '<div class="pf-hideable">' . $block_content . $close_button . '</div>';
+		}
+		return $block_content;
+	}
+
 }
 

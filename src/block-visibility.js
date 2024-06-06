@@ -13,6 +13,7 @@ addFilter(
 			...settings,
 			attributes: {
 				...settings.attributes,
+
 				'pf_hide_on_mobile': {
 					type: 'boolean',
 					default: false,
@@ -22,6 +23,11 @@ addFilter(
 					default: false,
 				},
 				'pf_hide_on_computer': {
+					type: 'boolean',
+					default: false,
+				},
+				
+				'pf_hidable': {
 					type: 'boolean',
 					default: false,
 				},
@@ -75,6 +81,31 @@ function VisibilityForm(props) {
 	)
 }
 
+/**
+ * Generate form for setting hidable settings.
+ */
+function HidableSettingsForm(props) {
+	const {
+		attributes: {
+			'pf_hidable': pf_hidable,
+		},
+		setAttributes,
+	} = props
+
+	return (
+				<PanelBody title={__("Hidable Settings")}>
+					<PanelRow>
+						<ToggleControl
+							label={__("Hidable")}
+							help={__("Allow the user to hide this block.")}
+							checked={ pf_hidable }
+							onChange={ () => setAttributes( { 'pf_hidable': ! pf_hidable } ) }
+						/>
+					</PanelRow>
+				</PanelBody>
+	)
+}
+
 // Add the new attributes to the block edit component.
 addFilter(
     'editor.BlockEdit',
@@ -102,6 +133,7 @@ addFilter(
 					<InspectorControls>
 						<Panel header="Pattern Friend">
 							<VisibilityForm { ...props } />
+							<HidableSettingsForm { ...props } />
 						</Panel>
 					</InspectorControls>
 					{wrappedElement}
