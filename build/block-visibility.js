@@ -178,6 +178,10 @@ __webpack_require__.r(__webpack_exports__);
       'pf_hidable': {
         type: 'boolean',
         default: false
+      },
+      'pf_hidable_button': {
+        type: 'string',
+        default: 'default'
       }
     }
   };
@@ -239,6 +243,20 @@ function HidableSettingsForm(props) {
     checked: pf_hidable,
     onChange: () => setAttributes({
       'pf_hidable': !pf_hidable
+    })
+  })), pf_hidable && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Hide Button Design"),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Select the design of the hide button."),
+    value: props.attributes.pf_hidable_button,
+    options: [{
+      label: 'Default',
+      value: 'default'
+    }, {
+      label: 'Red Corner Box',
+      value: 'red-corner-box'
+    }],
+    onChange: value => setAttributes({
+      'pf_hidable_button': value
     })
   })));
 }

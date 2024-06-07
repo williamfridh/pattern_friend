@@ -31,6 +31,10 @@ addFilter(
 					type: 'boolean',
 					default: false,
 				},
+				'pf_hidable_button': {
+					type: 'string',
+					default: 'default',
+				},
 			},
 		}
 	}
@@ -102,6 +106,20 @@ function HidableSettingsForm(props) {
 							onChange={ () => setAttributes( { 'pf_hidable': ! pf_hidable } ) }
 						/>
 					</PanelRow>
+					{pf_hidable && (
+						<PanelRow>
+							<SelectControl
+								label={__("Hide Button Design")}
+								help={__("Select the design of the hide button.")}
+								value={props.attributes.pf_hidable_button}
+								options={[
+									{ label: 'Default', value: 'default' },
+									{ label: 'Red Corner Box', value: 'red-corner-box' },
+								]}
+								onChange={ (value) => setAttributes( { 'pf_hidable_button': value } ) }
+							/>
+						</PanelRow>	
+					)}
 				</PanelBody>
 	)
 }

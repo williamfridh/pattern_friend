@@ -29,12 +29,33 @@
 /**
 * Hideable elements.
 */
-.pf-hideable {
+.pf-hidable {
+    position: relative;
 }
-.pf-hideable.pf-hideable-closed {
+.pf-hidable.pf-hideable-closed {
     display: none !important;
 }
-.pf-hideable-button {
+.pf-hidable-button {
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+
+}
+.pf-hidable-button[pf-design|="red-corner-box"] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30px;
+    text-align: center;
+    line-height: 30px;
+    background: rgb(255, 0, 0);
+    color: #fff;
+}
+.pf-hidable-button[pf-design|="red-corner-box"]:hover {
+    background: #8b0000;
 }
 
 /**
