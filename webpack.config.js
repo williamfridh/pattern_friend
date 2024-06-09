@@ -4,7 +4,7 @@ module.exports = {
     ...defaultConfig,
     entry: {
         pages: './src/pages.js',
-        'block-visibility': './src/block-visibility.js',
+        'block-editor-extensions': './src/block-editor-extensions.js',
     },
     output: {
         filename: '[name].js',

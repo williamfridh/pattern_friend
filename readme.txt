@@ -29,6 +29,9 @@ Yes. With this plugin, you can adjust what blocks to be displayed on certain dev
 
 == Changelog ==
 
+= v1.2.0 =
+* Added hidable group functionality.
+
 = v1.1.0 =
 * Added sticky header support.
 
@@ -36,6 +39,9 @@ Yes. With this plugin, you can adjust what blocks to be displayed on certain dev
 * Initial release
 
 == Upgrade Notice ==
+
+= v1.2.0 =
+* Additional functionality.
 
 = v1.1.0 =
 * Additional functionality.

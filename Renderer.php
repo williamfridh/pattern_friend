@@ -89,7 +89,7 @@ class Renderer {
 		$pf_hidable_group_button = isset($attributes['pf_hidable_group_button']) ? $attributes['pf_hidable_group_button'] : false;
 		// If the button is a group hiding button, put it inside a wrapper bound to a onClick function.
 		if ($pf_hidable_group_button) {
-			$block_content = '<div class="pf-hidable-group-button" onclick="pf_hide(' . $attributes['pf_hidable_group_button_hide_duration'] . ')">' . $block_content . '</div>';
+			$block_content = '<div class="pf-hidable-group-button" onclick="pf_hide(' . strval($attributes['pf_hidable_group_button_hide_duration']) . ')">' . $block_content . '</div>';
 		}
 		// Return the block content.
 		return $block_content;

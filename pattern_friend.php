@@ -4,7 +4,7 @@
  * Description:       Extends the post, page, and theme editor by adding a block visibility option based on device type. Supports mobile, tablet, and desktop.
  * Requires at least: 6.5.3
  * Requires PHP:      7.3.5
- * Version:           1.1.0
+ * Version:           1.2.0
  * Author:            William Fridh
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -44,9 +44,15 @@ class Pattern_Friend {
 		// Add the API endpoints when the REST API is initialized.
 		add_action('rest_api_init', [$this, 'activate_routes']);
 
-		// Enqueue the block visibility assets for both viewing and editing.
-		add_action('enqueue_block_assets', [$this, 'enqueue_block_visibility']);
-		add_action('enqueue_block_editor_assets', [$this, 'enqueue_block_visibility']);
+		// Enqueue visitor side scripts.
+		add_action('wp_enqueue_scripts', [$this, 'enqueue_visitor_scripts']);
+
+		// Enqueue the block edit extenions assets for both viewing and editing.
+		add_action('enqueue_block_editor_assets', [$this, 'enqueue_block_editor_extensions']);
+
+		// Enqueue the dynamic CSS.
+		add_action('enqueue_block_assets', [$this, 'enqueue_dynamic_css']);
+		add_action('enqueue_block_editor_assets', [$this, 'enqueue_dynamic_css']);
 
 		// Enqueue the admin scripts.
 		$page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -98,28 +104,53 @@ class Pattern_Friend {
 	}
 
 	/**
-	 * Enqueue block visiblity only JavaScript and CSS.
+	 * Enqueue block editor extensions.
 	 */
-	function enqueue_block_visibility(){
+	function enqueue_block_editor_extensions(){
 
-		$asset_file = include( plugin_dir_path( __FILE__ ) . 'build/block-visibility.asset.php');
+		$asset_file = include( plugin_dir_path( __FILE__ ) . 'build/block-editor-extensions.asset.php');
 
 		// Enqueue the bundled block JS file.
 		wp_enqueue_script(
-			__NAMESPACE__ . '_script',
-			plugins_url( 'build/block-visibility.js', __FILE__ ),
+			__NAMESPACE__ . '_block_editor_extensions_scripts',
+			plugins_url( 'build/block-editor-extensions.js', __FILE__ ),
 			$asset_file['dependencies'],
 			$asset_file['version'],
 			true	
 		);
+	}
+
+	/**
+	 * Enqueue dynamic css.
+	 */
+	function enqueue_dynamic_css(){
+
+		$asset_file = include( plugin_dir_path( __FILE__ ) . 'build/block-editor-extensions.asset.php');
 
 		// Enqueue the bundled block JS file.
 		wp_enqueue_style(
-			__NAMESPACE__ . '_style',
+			__NAMESPACE__ . '_dynamic_css_styles',
 			plugins_url( 'styles/dynamic.css', __FILE__ ),
 			[],
 			$asset_file['version'],
 			'all'	
+		);
+	}
+
+	/**
+	 * Enqueue visitor only JavaScript & CSS.
+	 */
+	function enqueue_visitor_scripts() {
+
+		$asset_file = include( plugin_dir_path( __FILE__ ) . 'build/block-editor-extensions.asset.php');
+
+		// Enqueue the bundled block JS file.
+		wp_enqueue_script(
+			__NAMESPACE__ . '_script',
+			plugins_url( 'src/visitor.js', __FILE__ ),
+			$asset_file['dependencies'],
+			$asset_file['version'],
+			true	
 		);
 	}
 
