@@ -47,23 +47,51 @@ class Renderer {
 	}
 
 	/**
-	 * Attende the hidable blocks.
+	 * Attend the hidable groups.
 	 * 
-	 * Wrapp each block with a div element that can be hidden, assign it an id,
-	 * and add a close button.
+	 * Wrap each block with a div element that can be hidden, assign it an id.
 	 * 
 	 * @param string $block_content The block content.
 	 * @param array $block The block.
 	 * @return string The block content.
 	 */
-	public static function hidable($block_content, $block) {
+	public static function hidable_group($block_content, $block) {
+		// Get attributes.
 		$attributes = $block['attrs'];
-		$pf_hidable = isset($attributes['pf_hidable']) ? $attributes['pf_hidable'] : false;
-		if ($pf_hidable) {
-			///$close_button_design = isset($attributes['pf_hidable_button']) ? $attributes['pf_hidable_button'] : 'default';
-			//$close_button = '<div class="pf-hidable-button" pf-design="' . $close_button_design . '">x</div>';
-			//$block_content = '<div class="pf-hidable" data-block-id="' . $block['attrs']['id'] . '">' . $block_content . $close_button . '</div>';
+		// Check if the block is of typ "core/group".
+		if ($block['blockName'] !== 'core/group') {
+			return $block_content;
 		}
+		// Check if the block is hidable.
+		$pf_hidable = isset($attributes['pf_hidable']) ? $attributes['pf_hidable'] : false;
+		// If the block is hidable, wrap it with a div element.
+		if ($pf_hidable) {
+			$block_content = '<div class="pf-hidable" data-block-id="' . $block['attrs']['id'] . '">' . $block_content . '</div>';
+		}
+		// Return the block content.
+		return $block_content;
+	}
+
+	/**
+	 * Attend the group hiding buttons.
+	 * 
+	 * Assigns the button to a javascript function that hides the group
+	 * and stores the group id in the choosen way.
+	 */
+	public static function group_hiding_button($block_content, $block) {
+		// Get attributes.
+		$attributes = $block['attrs'];
+		// Check if the block is of type "core/button".
+		if ($block['blockName'] !== 'core/button') {
+			return $block_content;
+		}
+		// Check if the button is a group hiding button.
+		$pf_hidable_group_button = isset($attributes['pf_hidable_group_button']) ? $attributes['pf_hidable_group_button'] : false;
+		// If the button is a group hiding button, put it inside a wrapper bound to a onClick function.
+		if ($pf_hidable_group_button) {
+			$block_content = '<div class="pf-hidable-group-button" onclick="pf_hide(' . $attributes['pf_hidable_group_button_hide_duration'] . ')">' . $block_content . '</div>';
+		}
+		// Return the block content.
 		return $block_content;
 	}
 

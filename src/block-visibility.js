@@ -1,8 +1,7 @@
 import { addFilter } from '@wordpress/hooks'
 import { InspectorControls } from '@wordpress/block-editor'
-import { Panel, PanelBody, ToggleControl, PanelRow, SelectControl, ColorPicker } from '@wordpress/components'
+import { Panel, PanelBody, ToggleControl, PanelRow } from '@wordpress/components'
 import { __experimentalNumberControl as NumberControl } from '@wordpress/components';
-import { __experimentalInputControl as InputControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n'
 import { createHigherOrderComponent } from '@wordpress/compose'
 import { Notice } from '@wordpress/components'
@@ -11,55 +10,53 @@ import { Notice } from '@wordpress/components'
 addFilter(
 	'blocks.registerBlockType',
 	'wp-pattern-friend/modify-block-visibility-attributes', (settings, name) => {
-		return {
-			...settings,
-			attributes: {
-				...settings.attributes,
 
-				'pf_hide_on_mobile': {
+		// Add additional attributes to the core/group block.
+		if (name == 'core/group')
+			settings.attributes = {
+				...settings.attributes,
+			
+				'pf_hidable_group': {
 					type: 'boolean',
 					default: false,
 				},
-				'pf_hide_on_tablet': {
-					type: 'boolean',
-					default: false,
-				},
-				'pf_hide_on_computer': {
-					type: 'boolean',
-					default: false,
-				},
+			}
+
+		// Add additional attributes to the core/button block.
+		if (name == 'core/button')
+			settings.attributes = {
+				...settings.attributes,
 				
-				'pf_hidable': {
+				'pf_hidable_group_button': {
 					type: 'boolean',
 					default: false,
 				},
-				'pf_hidable_button_text': {
-					type: 'string',
-					default: 'x',
-				},			
-				'pf_hidable_button_text_color': {
-					type: 'string',
-					default: '#fff',
-				},			
-				'pf_hidable_button_background_color': {
-					type: 'string',
-					default: '#ff0000',
-				},
-				'pf_hidable_button_height': {
+				'pf_hidable_group_button_hide_duration': {
 					type: 'number',
-					default: 30,
+					default: 24, // Set in hours
 				},
-				'pf_hidable_button_width': {
-					type: 'number',
-					default: 30,
-				},
-				'pf_hidable_button_position': {
-					type: 'string',
-					default: 'inline',
-				},
-				
+			}
+
+		// Add additional attributes to all blocks.
+		settings.attributes = {
+			...settings.attributes,
+
+			'pf_hide_on_mobile': {
+				type: 'boolean',
+				default: false,
+			},
+			'pf_hide_on_tablet': {
+				type: 'boolean',
+				default: false,
+			},
+			'pf_hide_on_computer': {
+				type: 'boolean',
+				default: false,
 			},
 		}
+
+		// Return the modified settings.
+		return settings
 	}
 )
 
@@ -109,18 +106,12 @@ function VisibilityForm(props) {
 }
 
 /**
- * Generate form for setting hidable settings.
+ * Generate form for group hidability.
  */
-function HidableSettingsForm(props) {
+function HidableGroupForm(props) {
 	const {
 		attributes: {
 			'pf_hidable': pf_hidable,
-			'pf_hidable_button_text': pf_hidable_button_text,
-			'pf_hidable_button_text_color': pf_hidable_button_text_color,
-			'pf_hidable_button_background_color': pf_hidable_button_background_color,
-			'pf_hidable_button_height': pf_hidable_button_height,
-			'pf_hidable_button_width': pf_hidable_button_width,
-			'pf_hidable_button_position': pf_hidable_button_position,
 		},
 		setAttributes,
 	} = props
@@ -129,66 +120,47 @@ function HidableSettingsForm(props) {
 				<PanelBody title={__("Hidable Settings")}>
 					<PanelRow>
 						<ToggleControl
-							label={__("Hidable")}
-							help={__("Allow the user to hide this block.")}
+							label={__("Make Group Hidable")}
+							help={__("Make this group hidable (requires an child button marked as a group closing button).")}
 							checked={ pf_hidable }
 							onChange={ () => setAttributes( { 'pf_hidable': ! pf_hidable } ) }
 						/>
 					</PanelRow>
-					{pf_hidable && (
-						<>
-							<PanelRow>
-								<InputControl
-									label="Button Text"
-									value={pf_hidable_button_text}
-									onChange={(value) => setAttributes({ 'pf_hidable_button_text': value })}
-								/>
-							</PanelRow>
-							<PanelRow>
-								<ColorPicker
-									label="Button Text Color"
-									enableAlpha
-									defaultValue={pf_hidable_button_text_color}
-									onChange={(value) => setAttributes({ 'pf_hidable_button_text_color': value })}
-								/>
-							</PanelRow>
-							<PanelRow>
-								<ColorPicker
-									label="Button Background Color"
-									enableAlpha
-									defaultValue={pf_hidable_button_background_color}
-									onChange={(value) => setAttributes({ 'pf_hidable_button_background_color': value })}
-								/>
-							</PanelRow>
-							<PanelRow>
-								<NumberControl
-									label="Button Height"
-									value={pf_hidable_button_height}
-									onChange={(value) => setAttributes({ 'pf_hidable_button_height': value })}
-								/>
-							</PanelRow>
-							<PanelRow>
-								<NumberControl
-									label="Button Width"
-									value={pf_hidable_button_width}
-									onChange={(value) => setAttributes({ 'pf_hidable_button_width': value })}
-								/>
-							</PanelRow>
-							<PanelRow>
-								<SelectControl
-									label="Button Position"
-									value={pf_hidable_button_position}
-									options={[
-										{ label: 'Inline', value: 'inline' },
-										{ label: 'Top Right', value: 'top-right' },
-										{ label: 'Top Left', value: 'top-left' },
-										{ label: 'Bottom Right', value: 'bottom-right' },
-										{ label: 'Bottom Left', value: 'bottom-left' },
-									]}
-									onChange={(value) => setAttributes({ 'pf_hidable_button_position': value })}
-								/>
-							</PanelRow>
-						</>
+				</PanelBody>
+	)
+}
+
+/**
+ * Generate a form for group closing button.
+ */
+function HidableGroupButtonForm(props) {
+	const {
+		attributes: {
+			'pf_hidable_group_button': pf_hidable_group_button,
+			'pf_hidable_group_button_hide_duration': pf_hidable_group_button_hide_duration,
+		},
+		setAttributes,
+	} = props
+
+	return (
+				<PanelBody title={__("Hidable Settings")}>
+					<PanelRow>
+						<ToggleControl
+							label={__("Assign As Hiding Button")}
+							help={__("Mark this button as a group hiding button.")}
+							checked={ pf_hidable_group_button }
+							onChange={ () => setAttributes( { 'pf_hidable_group_button': ! pf_hidable_group_button } ) }
+						/>
+					</PanelRow>
+					{pf_hidable_group_button && (
+						<PanelRow>
+							<NumberControl
+								label={__("Hide Duration (hours)")}
+								help={__("Set the duration for the group to be hidden in hours.")}
+								value={pf_hidable_group_button_hide_duration}
+								onChange={ (value) => setAttributes( { 'pf_hidable_group_button_hide_duration': value } ) }
+							/>
+						</PanelRow>
 					)}
 				</PanelBody>
 	)
@@ -221,7 +193,8 @@ addFilter(
 					<InspectorControls>
 						<Panel header="Pattern Friend">
 							<VisibilityForm { ...props } />
-							<HidableSettingsForm { ...props } />
+							{props.name == 'core/group' && <HidableGroupForm { ...props } />}
+							{props.name == 'core/button' && <HidableGroupButtonForm { ...props } />}
 						</Panel>
 					</InspectorControls>
 					{wrappedElement}
@@ -230,4 +203,3 @@ addFilter(
         }
     }),
 )
-
