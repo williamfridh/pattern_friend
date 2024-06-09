@@ -1,6 +1,8 @@
 import { addFilter } from '@wordpress/hooks'
 import { InspectorControls } from '@wordpress/block-editor'
-import { Panel, PanelBody, ToggleControl, PanelRow, SelectControl } from '@wordpress/components'
+import { Panel, PanelBody, ToggleControl, PanelRow, SelectControl, ColorPicker } from '@wordpress/components'
+import { __experimentalNumberControl as NumberControl } from '@wordpress/components';
+import { __experimentalInputControl as InputControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n'
 import { createHigherOrderComponent } from '@wordpress/compose'
 import { Notice } from '@wordpress/components'
@@ -31,10 +33,31 @@ addFilter(
 					type: 'boolean',
 					default: false,
 				},
-				'pf_hidable_button': {
+				'pf_hidable_button_text': {
 					type: 'string',
-					default: 'default',
+					default: 'x',
+				},			
+				'pf_hidable_button_text_color': {
+					type: 'string',
+					default: '#fff',
+				},			
+				'pf_hidable_button_background_color': {
+					type: 'string',
+					default: '#ff0000',
 				},
+				'pf_hidable_button_height': {
+					type: 'number',
+					default: 30,
+				},
+				'pf_hidable_button_width': {
+					type: 'number',
+					default: 30,
+				},
+				'pf_hidable_button_position': {
+					type: 'string',
+					default: 'inline',
+				},
+				
 			},
 		}
 	}
@@ -92,6 +115,12 @@ function HidableSettingsForm(props) {
 	const {
 		attributes: {
 			'pf_hidable': pf_hidable,
+			'pf_hidable_button_text': pf_hidable_button_text,
+			'pf_hidable_button_text_color': pf_hidable_button_text_color,
+			'pf_hidable_button_background_color': pf_hidable_button_background_color,
+			'pf_hidable_button_height': pf_hidable_button_height,
+			'pf_hidable_button_width': pf_hidable_button_width,
+			'pf_hidable_button_position': pf_hidable_button_position,
 		},
 		setAttributes,
 	} = props
@@ -107,18 +136,59 @@ function HidableSettingsForm(props) {
 						/>
 					</PanelRow>
 					{pf_hidable && (
-						<PanelRow>
-							<SelectControl
-								label={__("Hide Button Design")}
-								help={__("Select the design of the hide button.")}
-								value={props.attributes.pf_hidable_button}
-								options={[
-									{ label: 'Default', value: 'default' },
-									{ label: 'Red Corner Box', value: 'red-corner-box' },
-								]}
-								onChange={ (value) => setAttributes( { 'pf_hidable_button': value } ) }
-							/>
-						</PanelRow>	
+						<>
+							<PanelRow>
+								<InputControl
+									label="Button Text"
+									value={pf_hidable_button_text}
+									onChange={(value) => setAttributes({ 'pf_hidable_button_text': value })}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<ColorPicker
+									label="Button Text Color"
+									enableAlpha
+									defaultValue={pf_hidable_button_text_color}
+									onChange={(value) => setAttributes({ 'pf_hidable_button_text_color': value })}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<ColorPicker
+									label="Button Background Color"
+									enableAlpha
+									defaultValue={pf_hidable_button_background_color}
+									onChange={(value) => setAttributes({ 'pf_hidable_button_background_color': value })}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<NumberControl
+									label="Button Height"
+									value={pf_hidable_button_height}
+									onChange={(value) => setAttributes({ 'pf_hidable_button_height': value })}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<NumberControl
+									label="Button Width"
+									value={pf_hidable_button_width}
+									onChange={(value) => setAttributes({ 'pf_hidable_button_width': value })}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<SelectControl
+									label="Button Position"
+									value={pf_hidable_button_position}
+									options={[
+										{ label: 'Inline', value: 'inline' },
+										{ label: 'Top Right', value: 'top-right' },
+										{ label: 'Top Left', value: 'top-left' },
+										{ label: 'Bottom Right', value: 'bottom-right' },
+										{ label: 'Bottom Left', value: 'bottom-left' },
+									]}
+									onChange={(value) => setAttributes({ 'pf_hidable_button_position': value })}
+								/>
+							</PanelRow>
+						</>
 					)}
 				</PanelBody>
 	)
