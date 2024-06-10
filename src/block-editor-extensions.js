@@ -2,9 +2,11 @@ import { addFilter } from '@wordpress/hooks'
 import { InspectorControls } from '@wordpress/block-editor'
 import { Panel, PanelBody, ToggleControl, PanelRow } from '@wordpress/components'
 import { __experimentalNumberControl as NumberControl } from '@wordpress/components';
+import { __experimentalInputControl as InputControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n'
 import { createHigherOrderComponent } from '@wordpress/compose'
 import { Notice } from '@wordpress/components'
+import { Button } from '@wordpress/components';
 
 // Add the new attributes to the supported blocks.
 addFilter(
@@ -20,6 +22,11 @@ addFilter(
 					type: 'boolean',
 					default: false,
 				},
+			
+				'pf_id': {
+					type: 'string',
+					default: '',
+				},
 			}
 
 		// Add additional attributes to the core/button block.
@@ -33,7 +40,7 @@ addFilter(
 				},
 				'pf_hidable_group_button_hide_duration': {
 					type: 'number',
-					default: 24, // Set in hours
+					default: 0, // Set in hours
 				},
 			}
 
@@ -111,10 +118,15 @@ function VisibilityForm(props) {
 function HidableGroupForm(props) {
 	const {
 		attributes: {
-			'pf_hidable': pf_hidable,
+			'pf_hidable_group': pf_hidable_group,
+			'pf_id': pf_id,
 		},
 		setAttributes,
 	} = props
+
+	const setRandomId = () => {
+		setAttributes( { 'pf_id': Math.random().toString(36) } )
+	}
 
 	return (
 				<PanelBody title={__("Hidable Settings")}>
@@ -122,10 +134,30 @@ function HidableGroupForm(props) {
 						<ToggleControl
 							label={__("Make Group Hidable")}
 							help={__("Make this group hidable (requires an child button marked as a group closing button).")}
-							checked={ pf_hidable }
-							onChange={ () => setAttributes( { 'pf_hidable': ! pf_hidable } ) }
+							checked={ pf_hidable_group }
+							onChange={ () => setAttributes( { 'pf_hidable_group': ! pf_hidable_group } ) }
 						/>
 					</PanelRow>
+					{pf_hidable_group && (
+						<>
+							<PanelRow>
+								<InputControl
+									label={__("Group ID")}
+									help={__("Set a unique ID for the group.")}
+									value={pf_id}
+									onChange={ (value) => setAttributes( { 'pf_id': value } ) }
+								/>
+							</PanelRow>
+							<PanelRow>
+								<Button variant="secondary" onClick={ () => {setRandomId()} }>Generate Random ID</Button>
+							</PanelRow>
+							{!pf_id && (
+								<PanelRow>
+									<Notice status="warning" isDismissible={false}>A unique ID is required to make the group hidable.</Notice>
+								</PanelRow>
+							)}
+						</>
+					)}
 				</PanelBody>
 	)
 }

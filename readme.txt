@@ -12,15 +12,22 @@ Extends the post, page, and theme editor by adding a block visibility option bas
 
 == Description ==
 
-This plugin extends the editor by giving support for hiding each separate block on a certain device. It offers a span for mobile, tablet, and desktop, which can be set by the site admin on the dedicated options page found on the admin panel.
+This plugin extend the default Gutenberg editor with functionality often required for a better user experience. It's build to be lightweight, simple to use, and most importantly, stable troughout updates.
 
-It's a lightweight solution that will be expanded soon to add what we deem is missing in the default WordPress Block setup.
+**Key Features:**
+1. Makes each block hidable on mobile, tablet, and desktop.
+2. Adjustable thresholds for different devices.
+3. Hidable groups that stay hiden for a set amount of time.
 
 == Frequently Asked Questions ==
 
 = Can you use this to hide a menu on mobile devices? =
 
 Yes. With this plugin, you can adjust what blocks to be displayed on certain devices in the appearance editor.
+
+= Is it GDPR friendly? =
+
+Yes. The plugin only makes use of the devices local storage to keep track of what groups have been hidden.
 
 == Screenshots ==
 

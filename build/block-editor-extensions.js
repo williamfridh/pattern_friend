@@ -158,6 +158,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 // Add the new attributes to the supported blocks.
 (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__.addFilter)('blocks.registerBlockType', 'wp-pattern-friend/modify-block-visibility-attributes', (settings, name) => {
   // Add additional attributes to the core/group block.
@@ -166,6 +168,10 @@ __webpack_require__.r(__webpack_exports__);
     'pf_hidable_group': {
       type: 'boolean',
       default: false
+    },
+    'pf_id': {
+      type: 'string',
+      default: ''
     }
   };
 
@@ -178,7 +184,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     'pf_hidable_group_button_hide_duration': {
       type: 'number',
-      default: 24 // Set in hours
+      default: 0 // Set in hours
     }
   };
 
@@ -247,20 +253,41 @@ function VisibilityForm(props) {
 function HidableGroupForm(props) {
   const {
     attributes: {
-      'pf_hidable': pf_hidable
+      'pf_hidable_group': pf_hidable_group,
+      'pf_id': pf_id
     },
     setAttributes
   } = props;
+  const setRandomId = () => {
+    setAttributes({
+      'pf_id': Math.random().toString(36)
+    });
+  };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Hidable Settings")
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Make Group Hidable"),
     help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Make this group hidable (requires an child button marked as a group closing button)."),
-    checked: pf_hidable,
+    checked: pf_hidable_group,
     onChange: () => setAttributes({
-      'pf_hidable': !pf_hidable
+      'pf_hidable_group': !pf_hidable_group
     })
-  })));
+  })), pf_hidable_group && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalInputControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Group ID"),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Set a unique ID for the group."),
+    value: pf_id,
+    onChange: value => setAttributes({
+      'pf_id': value
+    })
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    variant: "secondary",
+    onClick: () => {
+      setRandomId();
+    }
+  }, "Generate Random ID")), !pf_id && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Notice, {
+    status: "warning",
+    isDismissible: false
+  }, "A unique ID is required to make the group hidable."))));
 }
 
 /**
