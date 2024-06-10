@@ -36,3 +36,13 @@
     font-size: 1em;
     font-weight: bold;
 }
+
+/**
+* Layout components.
+*/
+.components-panel__row.pf-align-left {
+    justify-content: flex-start;
+}
+.components-panel__row.pf-align-left > * {
+    margin: 0 10px 0 0;
+}

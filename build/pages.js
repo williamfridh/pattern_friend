@@ -2,6 +2,37 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/icons/reset.svg":
+/*!*****************************!*\
+  !*** ./src/icons/reset.svg ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ReactComponent: () => (/* binding */ SvgReset),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+var _path;
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+
+var SvgReset = function SvgReset(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("svg", _extends({
+    xmlns: "http://www.w3.org/2000/svg",
+    width: 24,
+    height: 24,
+    viewBox: "0 -960 960 960"
+  }, props), _path || (_path = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
+    d: "M520-330v-60h160v60zm60 210v-50h-60v-60h60v-50h60v160zm100-50v-60h160v60zm40-110v-160h60v50h60v60h-60v50zm111-280h-83q-26-88-99-144t-169-56q-117 0-198.5 81.5T200-480q0 72 32.5 132t87.5 98v-110h80v240H160v-80h94q-62-50-98-122.5T120-480q0-75 28.5-140.5t77-114 114-77T480-840q129 0 226.5 79.5T831-560"
+  })));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiIHdpZHRoPSIyNHB4IiBmaWxsPSIjMDAwMDAwIj48cGF0aCBkPSJNNTIwLTMzMHYtNjBoMTYwdjYwSDUyMFptNjAgMjEwdi01MGgtNjB2LTYwaDYwdi01MGg2MHYxNjBoLTYwWm0xMDAtNTB2LTYwaDE2MHY2MEg2ODBabTQwLTExMHYtMTYwaDYwdjUwaDYwdjYwaC02MHY1MGgtNjBabTExMS0yODBoLTgzcS0yNi04OC05OS0xNDR0LTE2OS01NnEtMTE3IDAtMTk4LjUgODEuNVQyMDAtNDgwcTAgNzIgMzIuNSAxMzJ0ODcuNSA5OHYtMTEwaDgwdjI0MEgxNjB2LTgwaDk0cS02Mi01MC05OC0xMjIuNVQxMjAtNDgwcTAtNzUgMjguNS0xNDAuNXQ3Ny0xMTRxNDguNS00OC41IDExNC03N1Q0ODAtODQwcTEyOSAwIDIyNi41IDc5LjVUODMxLTU2MFoiLz48L3N2Zz4=");
+
+/***/ }),
+
 /***/ "./src/icons/save.svg":
 /*!****************************!*\
   !*** ./src/icons/save.svg ***!
@@ -192,6 +223,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _icons_save_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../icons/save.svg */ "./src/icons/save.svg");
+/* harmony import */ var _icons_reset_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../icons/reset.svg */ "./src/icons/reset.svg");
+
 
 
 
@@ -242,7 +275,15 @@ const HeaderFooterForm = () => {
     help: "Want the header (logo & navigation) to stick to the top of the page when scrolling?",
     checked: stickyHeader == '1' ? true : false,
     onChange: handleStickyHeader
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, {
+    className: "pf-align-left"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    variant: "secondary",
+    icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+      src: _icons_reset_svg__WEBPACK_IMPORTED_MODULE_4__["default"],
+      alt: "Icon representing save action"
+    })
+  }, "Load Default"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     onClick: handleSubmit,
     variant: "primary",
     icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {

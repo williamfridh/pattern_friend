@@ -3496,3 +3496,12 @@ div.components-toolbar > div + div.has-left-divider::before {
     font-weight: bold;
 }
 
+/**
+* Layout components.
+*/
+.components-panel__row.pf-align-left {
+    justify-content: flex-start;
+}
+.components-panel__row.pf-align-left > * {
+    margin: 0 0 0 10px;
+}

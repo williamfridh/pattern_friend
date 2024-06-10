@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useState } from '@wordpress/element'
 import { PanelBody, PanelRow, Button, CheckboxControl } from '@wordpress/components'
 import SaveIcon from '../icons/save.svg';
+import ResetIcon from '../icons/reset.svg';
 
 const HeaderFooterForm = () => {
 
@@ -59,7 +60,8 @@ const HeaderFooterForm = () => {
 					/>
 				</PanelRow>
 
-				<PanelRow>
+				<PanelRow className="pf-align-left">
+					<Button variant='secondary' icon={<img src={ResetIcon} alt="Icon representing save action" />}>Load Default</Button>
 					<Button onClick={handleSubmit} variant='primary' icon={<img src={SaveIcon} alt="Icon representing save action" />}>Save</Button>
 				</PanelRow>
 			
