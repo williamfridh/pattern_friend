@@ -1,0 +1,9 @@
+{
+    "deviceThresholds": {
+        "mobileMaxThreshold": 600,
+        "tabletMaxThreshold": 1024
+    },
+    "headerFooter": {
+        "headerSticky": false
+    }
+}

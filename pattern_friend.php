@@ -25,11 +25,16 @@ if ( ! @include_once( plugin_dir_path( __FILE__ ) . 'Renderer.php' ) ) {
     // Handle error...
 }
 
-const DEFAULT_MOBILE_MAX_THRESHOLD = 600;
-const DEFAULT_TABLET_MAX_THRESHOLD = 1024;
-const DEFAULT_HEADER_STICKY = false;
+if ( ! function_exists( 'request_filesystem_credentials' ) ) {
+	if ( ! require_once ABSPATH . 'wp-admin/includes/file.php' ) {
+		// Handle the error.
+	}
+}
 
 class Pattern_Friend {
+
+	private $default_settings_file_path;
+	private $default_settings;
 
 	/**
 	 * Initialize the plugin.
@@ -37,6 +42,9 @@ class Pattern_Friend {
 	 * Register the menu option, API endpoints, and enqueue the block assets.
 	 */
 	public function __construct() {
+
+		// Set variables.
+		$this->default_settings_file_path = plugin_dir_path( __FILE__ ) . 'default-settings.jsonh';
 		
 		// Add the menu option to the admin menu.
 		add_action('admin_menu', [$this, 'menu_option']);
@@ -72,6 +80,35 @@ class Pattern_Friend {
 		// Register the upgrade hook.
 		//add_action( 'upgrader_process_complete', [$this, 'activation'],10, 2);
 
+		// Initialize the filesystem.
+		$creds = request_filesystem_credentials( site_url() );
+		
+		if ( ! WP_Filesystem( $creds ) ) {
+			// If the filesystem initialization fails, handle the error appropriately.
+			return;
+		}
+
+		// Get the global filesystem object.
+		global $wp_filesystem;
+		$this->wp_filesystem = $wp_filesystem;
+
+	}
+
+	/**
+	 * Load default settings.
+	 * 
+	 * Used for loading the default settings for the plugin
+	 * from a JSON file and return it as an array.
+	 */
+	function load_default_settings() {
+		if (!$this->wp_filesystem->exists( $this->default_settings_file_path )) {
+			throw new \Exception('Default settings file does not exist.');
+		}
+		$file_content = $file_content = $this->wp_filesystem->get_contents( $this->default_settings_file_path );
+		if ($file_content === false) {
+			throw new \Exception('Could not read default settings file.');
+		}
+		$default_settings = json_decode($file_content, true);
 	}
 
 	/**
@@ -93,9 +130,9 @@ class Pattern_Friend {
 	 * Generate options page and set default values.
 	 */
 	function options_page() {
-		add_option('pf_mobile_max_threshold', DEFAULT_MOBILE_MAX_THRESHOLD);
-		add_option('pf_tablet_max_threshold', DEFAULT_TABLET_MAX_THRESHOLD);
-		add_option('pf_header_sticky', DEFAULT_HEADER_STICKY);
+		add_option('pf_mobile_max_threshold', $this->default_settings['deviceThresholds']['mobileMaxThreshold']);
+		add_option('pf_tablet_max_threshold', $this->default_settings['deviceThresholds']['tabletMaxThreshold']);
+		add_option('pf_header_sticky', $this->default_settings['headerFooter']['headerSticky']);
 		include_once( 'pages/options.php' );
 	}
 
@@ -205,7 +242,11 @@ class Pattern_Friend {
 		 */
 		$css_generator = new \PatternFriend\CSSGenerator();
 		if ( ! $css_generator->file_exists() ) {
-			$css_generator->generate(DEFAULT_MOBILE_MAX_THRESHOLD, DEFAULT_TABLET_MAX_THRESHOLD, DEFAULT_HEADER_STICKY);
+			$css_generator->generate(
+				$this->default_settings['deviceThresholds']['mobileMaxThreshold'],
+				$this->default_settings['deviceThresholds']['tabletMaxThreshold'],
+				$this->default_settings['headerFooter']['headerSticky']
+			);
 		}
 
 		// Set transient

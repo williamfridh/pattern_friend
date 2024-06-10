@@ -116,6 +116,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _icons_save_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../icons/save.svg */ "./src/icons/save.svg");
+/* harmony import */ var _icons_reset_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../icons/reset.svg */ "./src/icons/reset.svg");
+/* harmony import */ var _default_settings_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../default-settings.json */ "./default-settings.json");
+
+
 
 
 
@@ -175,6 +179,15 @@ const DeviceVisibilityThresholdsForm = () => {
       alert('Options saved successfully!');
     });
   };
+
+  /**
+   * Load default settings.
+   */
+  const handleLoadDefault = () => {
+    const deviceThresholds = _default_settings_json__WEBPACK_IMPORTED_MODULE_5__.deviceThresholds;
+    setMobileMaxThreshold(deviceThresholds.mobileMaxThreshold);
+    setTabletMaxThreshold(deviceThresholds.tabletMaxThreshold);
+  };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: "Device Visibility Thresholds"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalNumberControl, {
@@ -189,13 +202,16 @@ const DeviceVisibilityThresholdsForm = () => {
     value: tabletMaxThreshold,
     onChange: handleTabletMaxThresholdChange,
     type: "number"
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, {
+    className: "pf-align-left"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    onClick: handleLoadDefault,
+    variant: "secondary",
+    icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_reset_svg__WEBPACK_IMPORTED_MODULE_4__.ReactComponent, null)
+  }, "Load Default"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     onClick: handleSubmit,
     variant: "primary",
-    icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-      src: _icons_save_svg__WEBPACK_IMPORTED_MODULE_3__["default"],
-      alt: "Icon representing save action"
-    })
+    icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_save_svg__WEBPACK_IMPORTED_MODULE_3__.ReactComponent, null)
   }, "Save")), mobileMaxThreshold === tabletMaxThreshold && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Notice, {
     status: "warning"
   }, "The thresholds should not be the same. Equal thresholds will lead to no tablet support.")), error !== '' && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Notice, {
@@ -223,8 +239,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _icons_save_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../icons/save.svg */ "./src/icons/save.svg");
-/* harmony import */ var _icons_reset_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../icons/reset.svg */ "./src/icons/reset.svg");
-
 
 
 
@@ -275,21 +289,10 @@ const HeaderFooterForm = () => {
     help: "Want the header (logo & navigation) to stick to the top of the page when scrolling?",
     checked: stickyHeader == '1' ? true : false,
     onChange: handleStickyHeader
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, {
-    className: "pf-align-left"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-    variant: "secondary",
-    icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-      src: _icons_reset_svg__WEBPACK_IMPORTED_MODULE_4__["default"],
-      alt: "Icon representing save action"
-    })
-  }, "Load Default"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     onClick: handleSubmit,
     variant: "primary",
-    icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
-      src: _icons_save_svg__WEBPACK_IMPORTED_MODULE_3__["default"],
-      alt: "Icon representing save action"
-    })
+    icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_save_svg__WEBPACK_IMPORTED_MODULE_3__.ReactComponent, null)
   }, "Save")));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (HeaderFooterForm);
@@ -363,6 +366,16 @@ module.exports = window["wp"]["components"];
 /***/ ((module) => {
 
 module.exports = window["wp"]["element"];
+
+/***/ }),
+
+/***/ "./default-settings.json":
+/*!*******************************!*\
+  !*** ./default-settings.json ***!
+  \*******************************/
+/***/ ((module) => {
+
+module.exports = /*#__PURE__*/JSON.parse('{"deviceThresholds":{"mobileMaxThreshold":600,"tabletMaxThreshold":1024},"headerFooter":{"headerSticky":false}}');
 
 /***/ })
 
