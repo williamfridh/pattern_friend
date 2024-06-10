@@ -49,7 +49,7 @@ class PatternFriend {
     /**
      * Hide all the already hiddden elements.
      */
-    initial_hiding() {
+    hide_groups() {
         // Loop through the hidable object.
         for (const blockId in this.hidable) {
             // Get the current time.
@@ -57,10 +57,12 @@ class PatternFriend {
             // Check if the hide time is greater than the current time.
             if (this.hidable[blockId] > currentTime) {
                 // Get the group element with the data-block-id attribute.
-                const groupElement = document.querySelector(`.pf-hidable[data-block-id="${blockId}"]`);
-                // Hide the element.
-                if (groupElement)
-                    groupElement.style.display = 'none';
+                const groupElement = document.querySelectorAll(`.pf-hidable[data-block-id="${blockId}"]`);
+                // For each found element.
+                groupElement.forEach((element) => {
+                    // Hide the element.
+                    element.style.display = 'none';
+                });
             }
         }
     }
@@ -83,8 +85,8 @@ class PatternFriend {
         this.hidable[blockId] = hideTime;
         // Save the storage object.
         this.save_storage();
-        // Hide the element.
-        groupElement.style.display = 'none';
+        // Hide elements.
+        this.hide_groups();
     }
 
 }
@@ -95,6 +97,6 @@ const patternFriend = new PatternFriend();
  * Add an event listener to the document to run code when the DOM is ready.
  */
 document.addEventListener("DOMContentLoaded", function() {
-    patternFriend.initial_hiding();
+    patternFriend.hide_groups();
 });
 

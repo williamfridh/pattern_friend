@@ -23,6 +23,7 @@ class CSSGenerator {
 
 	private $wp_filesystem;
 	private $plugin_dir_path;
+	private $css_folder_path;
 	private $template_file_path;
 	private $target_file_path;
 
@@ -34,11 +35,14 @@ class CSSGenerator {
 		// Get the plugin directory path.
 		$this->plugin_dir_path = plugin_dir_path( __FILE__ );
 
+		// Get CSS folder path.
+		$this->css_folder_path = $this->plugin_dir_path . 'src/styles/';
+
 		// Set the template file path.
-		$this->template_file_path = $this->plugin_dir_path . 'styles/dynamic.template.css';
+		$this->template_file_path = $this->css_folder_path . 'dynamic.template.css';
 
 		// Set the target file path.
-		$this->target_file_path = $this->plugin_dir_path . 'styles/dynamic.css';
+		$this->target_file_path = $this->css_folder_path . 'dynamic.css';
 
 		// Initialize the filesystem.
 		$creds = request_filesystem_credentials( site_url() );

@@ -143,7 +143,7 @@ function HidableGroupForm(props) {
 							<PanelRow>
 								<InputControl
 									label={__("Group ID")}
-									help={__("Set a unique ID for the group.")}
+									help={__("Set a ID for the group. Note that multiple groups can share an same ID.")}
 									value={pf_id}
 									onChange={ (value) => setAttributes( { 'pf_id': value } ) }
 								/>
@@ -175,11 +175,11 @@ function HidableGroupButtonForm(props) {
 	} = props
 
 	return (
-				<PanelBody title={__("Hidable Settings")}>
+				<PanelBody title={__("Hidable Groups")}>
 					<PanelRow>
 						<ToggleControl
 							label={__("Assign As Hiding Button")}
-							help={__("Mark this button as a group hiding button.")}
+							help={__("Mark this button as a group hiding button. Note that is has to be a child of a group marked as hidable.")}
 							checked={ pf_hidable_group_button }
 							onChange={ () => setAttributes( { 'pf_hidable_group_button': ! pf_hidable_group_button } ) }
 						/>

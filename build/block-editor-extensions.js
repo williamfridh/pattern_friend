@@ -274,7 +274,7 @@ function HidableGroupForm(props) {
     })
   })), pf_hidable_group && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalInputControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Group ID"),
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Set a unique ID for the group."),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Set a ID for the group. Note that multiple groups can share an same ID."),
     value: pf_id,
     onChange: value => setAttributes({
       'pf_id': value
@@ -302,10 +302,10 @@ function HidableGroupButtonForm(props) {
     setAttributes
   } = props;
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Hidable Settings")
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Hidable Groups")
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Assign As Hiding Button"),
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Mark this button as a group hiding button."),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Mark this button as a group hiding button. Note that is has to be a child of a group marked as hidable."),
     checked: pf_hidable_group_button,
     onChange: () => setAttributes({
       'pf_hidable_group_button': !pf_hidable_group_button

@@ -30,4 +30,4 @@ node_modules/
 .env
 
 # Extra
-styles/dynamic.css
+src/styles/dynamic.css

@@ -8,7 +8,7 @@ Requires PHP: 7.3.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Extends the post, page, and theme editor by adding a block visibility option based on device type. Supports mobile, tablet, and desktop.
+Extends the Gutenberg editor with addtional functionality with lightweight code.
 
 == Description ==
 
@@ -36,6 +36,9 @@ Yes. The plugin only makes use of the devices local storage to keep track of wha
 
 == Changelog ==
 
+= v1.2.1 =
+* 
+
 = v1.2.0 =
 * Added hidable group functionality.
 
@@ -46,6 +49,9 @@ Yes. The plugin only makes use of the devices local storage to keep track of wha
 * Initial release
 
 == Upgrade Notice ==
+
+= v1.2.1 =
+* 
 
 = v1.2.0 =
 * Additional functionality.
