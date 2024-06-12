@@ -37,7 +37,8 @@ Yes. The plugin only makes use of the devices local storage to keep track of wha
 == Changelog ==
 
 = v1.2.1 =
-* 
+* Added button to load default threshold resolutions.
+* Refactoring code and changing folder structure.
 
 = v1.2.0 =
 * Added hidable group functionality.

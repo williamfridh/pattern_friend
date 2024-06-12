@@ -44,7 +44,7 @@ class Pattern_Friend {
 	public function __construct() {
 
 		// Set variables.
-		$this->default_settings_file_path = plugin_dir_path( __FILE__ ) . 'default-settings.jsonh';
+		$this->default_settings_file_path = plugin_dir_path( __FILE__ ) . 'default-settings.json';
 		
 		// Add the menu option to the admin menu.
 		add_action('admin_menu', [$this, 'menu_option']);
@@ -92,6 +92,9 @@ class Pattern_Friend {
 		global $wp_filesystem;
 		$this->wp_filesystem = $wp_filesystem;
 
+		// Load default settings.
+		$this->load_default_settings();
+
 	}
 
 	/**
@@ -108,7 +111,7 @@ class Pattern_Friend {
 		if ($file_content === false) {
 			throw new \Exception('Could not read default settings file.');
 		}
-		$default_settings = json_decode($file_content, true);
+		$this ->default_settings = json_decode($file_content, true);
 	}
 
 	/**
