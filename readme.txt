@@ -8,16 +8,18 @@ Requires PHP: 7.3.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Extends the Gutenberg editor with addtional functionality with lightweight code.
+Extends the Gutenberg block editor with addtional functionality with lightweight code.
 
 == Description ==
 
-This plugin extend the default Gutenberg editor with functionality often required for a better user experience. It's build to be lightweight, simple to use, and most importantly, stable troughout updates.
+This plugin extend the default Gutenberg block editor with functionality often required for a better user experience. It's build to be lightweight, simple to use, and most importantly, stable troughout updates.
 
 **Key Features:**
 1. Makes each block hidable on mobile, tablet, and desktop.
 2. Adjustable thresholds for different devices.
 3. Hidable groups that stay hiden for a set amount of time.
+
+*Note that this plugin can adds additional attributes to blocks which will not be removed upon uninstall as this can risk damaging post data.*
 
 == Frequently Asked Questions ==
 
@@ -39,6 +41,8 @@ Yes. The plugin only makes use of the devices local storage to keep track of wha
 = v1.2.1 =
 * Added button to load default threshold resolutions.
 * Refactoring code and changing folder structure.
+* Added form loading and success indicator
+* Added uninstall script to clear up options.
 
 = v1.2.0 =
 * Added hidable group functionality.
@@ -52,7 +56,7 @@ Yes. The plugin only makes use of the devices local storage to keep track of wha
 == Upgrade Notice ==
 
 = v1.2.1 =
-* 
+* Added functionality and improved overall plugin quality.
 
 = v1.2.0 =
 * Additional functionality.

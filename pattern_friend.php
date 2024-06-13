@@ -78,7 +78,7 @@ class Pattern_Friend {
 		add_action('admin_notices', [$this, 'plugin_activation_notice']);
 
 		// Register the upgrade hook.
-		//add_action( 'upgrader_process_complete', [$this, 'activation'],10, 2);
+		//add_action( 'upgrader_process_complete', [$this, 'update'],10, 2);
 
 		// Initialize the filesystem.
 		$creds = request_filesystem_credentials( site_url() );
@@ -111,7 +111,7 @@ class Pattern_Friend {
 		if ($file_content === false) {
 			throw new \Exception('Could not read default settings file.');
 		}
-		$this ->default_settings = json_decode($file_content, true);
+		$this->default_settings = json_decode($file_content, true);
 	}
 
 	/**
@@ -133,9 +133,6 @@ class Pattern_Friend {
 	 * Generate options page and set default values.
 	 */
 	function options_page() {
-		add_option('pf_mobile_max_threshold', $this->default_settings['deviceThresholds']['mobileMaxThreshold']);
-		add_option('pf_tablet_max_threshold', $this->default_settings['deviceThresholds']['tabletMaxThreshold']);
-		add_option('pf_header_sticky', $this->default_settings['headerFooter']['headerSticky']);
 		include_once( 'pages/options.php' );
 	}
 
@@ -237,23 +234,42 @@ class Pattern_Friend {
 	 * @return void
 	 */
 	public function activation() {
-
-		/*
-		 * Create the dynamic CSS file if it does not exist.
-		 * 	
-		 * This file is used to store the dynamic CSS for the block.
-		 */
-		$css_generator = new \PatternFriend\CSSGenerator();
-		if ( ! $css_generator->file_exists() ) {
-			$css_generator->generate(
-				$this->default_settings['deviceThresholds']['mobileMaxThreshold'],
-				$this->default_settings['deviceThresholds']['tabletMaxThreshold'],
-				$this->default_settings['headerFooter']['headerSticky']
-			);
-		}
-
+		// Prepare CSS and options.
+		$this->prepare_css_and_options();
 		// Set transient
 		set_transient('plugin_activated', true, 5);
+	}
+
+	/**
+	 * Update.
+	 * 
+	 * Perform the necesarry tasks upon plugin update.
+	 * 
+	 * @return void
+	 */
+	public function update() {
+		// Prepare CSS and options.
+		$this->prepare_css_and_options();
+	}
+
+	/**
+	 * Prepare CSS and options.
+	 * 
+	 * Called upon plugin activation and update.
+	 * 
+	 * @return void
+	 */
+	public function prepare_css_and_options() {
+		// Generate new CSS.
+		$css_generator->generate(
+			$this->default_settings['deviceThresholds']['mobileMaxThreshold'],
+			$this->default_settings['deviceThresholds']['tabletMaxThreshold'],
+			$this->default_settings['headerFooter']['headerSticky']
+		);
+		// Set default options.
+		add_option('pf_mobile_max_threshold', $this->default_settings['deviceThresholds']['mobileMaxThreshold']);
+		add_option('pf_tablet_max_threshold', $this->default_settings['deviceThresholds']['tabletMaxThreshold']);
+		add_option('pf_header_sticky', $this->default_settings['headerFooter']['headerSticky']);
 	}
 
 	/**

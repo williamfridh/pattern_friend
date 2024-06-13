@@ -6,7 +6,7 @@ import FormLoadingOverlay from './FormLoadingOverlay';
 
 const HeaderFooterForm = () => {
 
-	const [stickyHeader, setStickyHeader] = useState('0')
+	const [stickyHeader, setStickyHeader] = useState()
 	const [error, setError] = useState('')
 	const [isLoading, setIsLoading] = useState(true)
 	const [isComplete, setIsComplete] = useState(false)
@@ -16,7 +16,7 @@ const HeaderFooterForm = () => {
 		 * Initialize the options fields with the data received from the REST API
 		 * endpoint provided by the plugin.
 		 */
-		wp.apiFetch({path: '/wp-pattern-friend/v2/options/header_footer'}).
+		wp.apiFetch({path: '/wp-pattern-friend/v2.1/options/header_footer'}).
 			then(data => {
 					//Set the new values of the options in the state
 					setStickyHeader(data['pf_header_sticky'])
@@ -30,9 +30,9 @@ const HeaderFooterForm = () => {
 	 */
 	const handleStickyHeader = (value) => {
 		if (value)
-			setStickyHeader('1')
+			setStickyHeader('true')
 		else
-			setStickyHeader('0')
+			setStickyHeader('false')
 	}
 
 	/**
@@ -41,7 +41,7 @@ const HeaderFooterForm = () => {
 	const handleSubmit = () => {
 		setIsLoading(true)
 		wp.apiFetch({
-			path: '/wp-pattern-friend/v2/options/header_footer',
+			path: '/wp-pattern-friend/v2.1/options/header_footer',
 			method: 'POST',
 			data: {
 				'pf_header_sticky': stickyHeader,
@@ -61,7 +61,7 @@ const HeaderFooterForm = () => {
 						<CheckboxControl
 							label="Sticky Header"
 							help="Want the header (logo & navigation) to stick to the top of the page when scrolling? Note that this functionality is limited to the theme."
-							checked={ stickyHeader == '1' ? true : false}
+							checked={ stickyHeader == 'true' ? true : false}
 							onChange={handleStickyHeader}
 						/>
 					</PanelRow>

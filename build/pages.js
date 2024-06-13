@@ -140,7 +140,7 @@ const DeviceVisibilityThresholdsForm = () => {
      * endpoint provided by the plugin.
      */
     wp.apiFetch({
-      path: '/wp-pattern-friend/v2/options/block_visibility'
+      path: '/wp-pattern-friend/v2.1/options/block_visibility'
     }).then(data => {
       //Set the new values of the options in the state
       setMobileMaxThreshold(data['pf_mobile_max_threshold']);
@@ -174,7 +174,7 @@ const DeviceVisibilityThresholdsForm = () => {
   const handleSubmit = () => {
     setIsLoading(true);
     wp.apiFetch({
-      path: '/wp-pattern-friend/v2/options/block_visibility',
+      path: '/wp-pattern-friend/v2.1/options/block_visibility',
       method: 'POST',
       data: {
         'pf_mobile_max_threshold': mobileMaxThreshold,
@@ -287,7 +287,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const HeaderFooterForm = () => {
-  const [stickyHeader, setStickyHeader] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)('0');
+  const [stickyHeader, setStickyHeader] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)();
   const [error, setError] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)('');
   const [isLoading, setIsLoading] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
   const [isComplete, setIsComplete] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
@@ -297,7 +297,7 @@ const HeaderFooterForm = () => {
      * endpoint provided by the plugin.
      */
     wp.apiFetch({
-      path: '/wp-pattern-friend/v2/options/header_footer'
+      path: '/wp-pattern-friend/v2.1/options/header_footer'
     }).then(data => {
       //Set the new values of the options in the state
       setStickyHeader(data['pf_header_sticky']);
@@ -309,7 +309,7 @@ const HeaderFooterForm = () => {
    * Handle input changes.
    */
   const handleStickyHeader = value => {
-    if (value) setStickyHeader('1');else setStickyHeader('0');
+    if (value) setStickyHeader('true');else setStickyHeader('false');
   };
 
   /**
@@ -318,7 +318,7 @@ const HeaderFooterForm = () => {
   const handleSubmit = () => {
     setIsLoading(true);
     wp.apiFetch({
-      path: '/wp-pattern-friend/v2/options/header_footer',
+      path: '/wp-pattern-friend/v2.1/options/header_footer',
       method: 'POST',
       data: {
         'pf_header_sticky': stickyHeader
@@ -335,7 +335,7 @@ const HeaderFooterForm = () => {
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CheckboxControl, {
     label: "Sticky Header",
     help: "Want the header (logo & navigation) to stick to the top of the page when scrolling? Note that this functionality is limited to the theme.",
-    checked: stickyHeader == '1' ? true : false,
+    checked: stickyHeader == 'true' ? true : false,
     onChange: handleStickyHeader
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     onClick: handleSubmit,
@@ -425,7 +425,7 @@ module.exports = window["wp"]["element"];
   \*******************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"deviceThresholds":{"mobileMaxThreshold":600,"tabletMaxThreshold":1024},"headerFooter":{"headerSticky":false}}');
+module.exports = /*#__PURE__*/JSON.parse('{"deviceThresholds":{"mobileMaxThreshold":600,"tabletMaxThreshold":1024},"headerFooter":{"headerSticky":"false"}}');
 
 /***/ })
 

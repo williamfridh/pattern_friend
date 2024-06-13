@@ -32,7 +32,7 @@ class Routes extends \WP_REST_Controller {
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->version = '2';
+		$this->version = '2.1';
 		$this->namespace = 'wp-pattern-friend/v' . $this->version;
 	}
 
@@ -163,7 +163,7 @@ class Routes extends \WP_REST_Controller {
 	public function update_options_header_footer( \WP_REST_Request $request ) {
 
 		// Get the data and sanitize.
-		$pf_header_sticky = absint( $request->get_param( 'pf_header_sticky' ) );
+		$pf_header_sticky = $request->get_param( 'pf_header_sticky' );
 
 		// Update the options.
 		update_option( 'pf_header_sticky', $pf_header_sticky );

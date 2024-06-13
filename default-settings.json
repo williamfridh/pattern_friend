@@ -4,6 +4,6 @@
         "tabletMaxThreshold": 1024
     },
     "headerFooter": {
-        "headerSticky": false
+        "headerSticky": "false"
     }
 }

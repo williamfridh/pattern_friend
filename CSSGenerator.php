@@ -93,7 +93,7 @@ class CSSGenerator {
 		$file_content = str_replace('/*TABLET_MAX_THRESHOLD*/', $tablet_max_threshold, $file_content);
 		$file_content = str_replace('/*COMPUTER_MIN_THRESHOLD*/', $tablet_max_threshold + 1, $file_content);
 
-		if ( $header_sticky == '1') {
+		if ( $header_sticky == 'true') {
 			$header_sticky_css = "
 			.wp-site-blocks > header {
 				position: sticky;
