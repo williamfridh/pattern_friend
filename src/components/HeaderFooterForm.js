@@ -1,13 +1,15 @@
 import { useEffect } from 'react'
 import { useState } from '@wordpress/element'
-import { PanelBody, PanelRow, Button, CheckboxControl } from '@wordpress/components'
+import { PanelBody, PanelRow, Button, CheckboxControl, Notice } from '@wordpress/components'
 import { ReactComponent as SaveIcon } from '../icons/save.svg';
+import FormLoadingOverlay from './FormLoadingOverlay';
 
 const HeaderFooterForm = () => {
 
 	const [stickyHeader, setStickyHeader] = useState('0')
 	const [error, setError] = useState('')
-	const [isLoading, setIsLoading] = useState(false)
+	const [isLoading, setIsLoading] = useState(true)
+	const [isComplete, setIsComplete] = useState(false)
 
 	useEffect(() => {
 		/**
@@ -18,6 +20,7 @@ const HeaderFooterForm = () => {
 			then(data => {
 					//Set the new values of the options in the state
 					setStickyHeader(data['pf_header_sticky'])
+					setIsLoading(false)
 				},
 			);
 	}, [])
@@ -36,6 +39,7 @@ const HeaderFooterForm = () => {
 	 * Handle submit.
 	 */
 	const handleSubmit = () => {
+		setIsLoading(true)
 		wp.apiFetch({
 			path: '/wp-pattern-friend/v2/options/header_footer',
 			method: 'POST',
@@ -43,25 +47,34 @@ const HeaderFooterForm = () => {
 				'pf_header_sticky': stickyHeader,
 			},
 		}).then(data => {
-			alert('Options saved successfully!')
+			setIsLoading(false)
+			setIsComplete(true)
 		})
 	}
 
 	return (
 			<PanelBody title="Header">
 
-				<PanelRow>
-					<CheckboxControl
-						label="Sticky Header"
-						help="Want the header (logo & navigation) to stick to the top of the page when scrolling?"
-						checked={ stickyHeader == '1' ? true : false}
-						onChange={handleStickyHeader}
-					/>
-				</PanelRow>
+				<div className={isLoading && `pf-form-loading`}>
 
-				<PanelRow>
-					<Button onClick={handleSubmit} variant='primary' icon={<SaveIcon />}>Save</Button>
-				</PanelRow>
+					<PanelRow>
+						<CheckboxControl
+							label="Sticky Header"
+							help="Want the header (logo & navigation) to stick to the top of the page when scrolling? Note that this functionality is limited to the theme."
+							checked={ stickyHeader == '1' ? true : false}
+							onChange={handleStickyHeader}
+						/>
+					</PanelRow>
+
+					<PanelRow>
+						<Button onClick={handleSubmit} variant='primary' icon={<SaveIcon />}>Save</Button>
+					</PanelRow>
+
+					{isComplete && <PanelRow><Notice status="success">Options saved successfully!</Notice></PanelRow>}
+
+				</div>
+
+				{isLoading && <FormLoadingOverlay />}
 			
 			</PanelBody>
 	)

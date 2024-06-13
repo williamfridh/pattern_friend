@@ -118,6 +118,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _icons_save_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../icons/save.svg */ "./src/icons/save.svg");
 /* harmony import */ var _icons_reset_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../icons/reset.svg */ "./src/icons/reset.svg");
 /* harmony import */ var _default_settings_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../default-settings.json */ "./default-settings.json");
+/* harmony import */ var _FormLoadingOverlay__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FormLoadingOverlay */ "./src/components/FormLoadingOverlay.js");
+
 
 
 
@@ -130,7 +132,8 @@ const DeviceVisibilityThresholdsForm = () => {
   const [mobileMaxThreshold, setMobileMaxThreshold] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)('');
   const [tabletMaxThreshold, setTabletMaxThreshold] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)('');
   const [error, setError] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)('');
-  const [isLoading, setIsLoading] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+  const [isLoading, setIsLoading] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
+  const [isComplete, setIsComplete] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     /**
      * Initialize the options fields with the data received from the REST API
@@ -142,6 +145,7 @@ const DeviceVisibilityThresholdsForm = () => {
       //Set the new values of the options in the state
       setMobileMaxThreshold(data['pf_mobile_max_threshold']);
       setTabletMaxThreshold(data['pf_tablet_max_threshold']);
+      setIsLoading(false);
     });
   }, []);
 
@@ -168,6 +172,7 @@ const DeviceVisibilityThresholdsForm = () => {
    * Handle submit.
    */
   const handleSubmit = () => {
+    setIsLoading(true);
     wp.apiFetch({
       path: '/wp-pattern-friend/v2/options/block_visibility',
       method: 'POST',
@@ -176,7 +181,8 @@ const DeviceVisibilityThresholdsForm = () => {
         'pf_tablet_max_threshold': tabletMaxThreshold
       }
     }).then(data => {
-      alert('Options saved successfully!');
+      setIsLoading(false);
+      setIsComplete(true);
     });
   };
 
@@ -190,6 +196,8 @@ const DeviceVisibilityThresholdsForm = () => {
   };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: "Device Visibility Thresholds"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: isLoading && `pf-form-loading`
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalNumberControl, {
     label: "Mobile Max Threshold",
     help: "The maximum width in pixels for mobile devices.",
@@ -216,9 +224,41 @@ const DeviceVisibilityThresholdsForm = () => {
     status: "warning"
   }, "The thresholds should not be the same. Equal thresholds will lead to no tablet support.")), error !== '' && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Notice, {
     status: "error"
-  }, error)));
+  }, error)), isComplete && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Notice, {
+    status: "success"
+  }, "Options saved successfully!"))), isLoading && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_FormLoadingOverlay__WEBPACK_IMPORTED_MODULE_6__["default"], null));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DeviceVisibilityThresholdsForm);
+
+/***/ }),
+
+/***/ "./src/components/FormLoadingOverlay.js":
+/*!**********************************************!*\
+  !*** ./src/components/FormLoadingOverlay.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+/**
+ * Form loading overlay.
+ * 
+ * Component that displays a loading overlay over a form.
+ * Used for UX to indicate that the form is loading.
+ */
+const FormLoadingOverlay = () => {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "pf-form-loading-overlay"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "pf-form-loading-animation"
+  }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FormLoadingOverlay);
 
 /***/ }),
 
@@ -239,6 +279,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _icons_save_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../icons/save.svg */ "./src/icons/save.svg");
+/* harmony import */ var _FormLoadingOverlay__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FormLoadingOverlay */ "./src/components/FormLoadingOverlay.js");
+
 
 
 
@@ -247,7 +289,8 @@ __webpack_require__.r(__webpack_exports__);
 const HeaderFooterForm = () => {
   const [stickyHeader, setStickyHeader] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)('0');
   const [error, setError] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)('');
-  const [isLoading, setIsLoading] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+  const [isLoading, setIsLoading] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
+  const [isComplete, setIsComplete] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     /**
      * Initialize the options fields with the data received from the REST API
@@ -258,6 +301,7 @@ const HeaderFooterForm = () => {
     }).then(data => {
       //Set the new values of the options in the state
       setStickyHeader(data['pf_header_sticky']);
+      setIsLoading(false);
     });
   }, []);
 
@@ -272,6 +316,7 @@ const HeaderFooterForm = () => {
    * Handle submit.
    */
   const handleSubmit = () => {
+    setIsLoading(true);
     wp.apiFetch({
       path: '/wp-pattern-friend/v2/options/header_footer',
       method: 'POST',
@@ -279,21 +324,26 @@ const HeaderFooterForm = () => {
         'pf_header_sticky': stickyHeader
       }
     }).then(data => {
-      alert('Options saved successfully!');
+      setIsLoading(false);
+      setIsComplete(true);
     });
   };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: "Header"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: isLoading && `pf-form-loading`
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CheckboxControl, {
     label: "Sticky Header",
-    help: "Want the header (logo & navigation) to stick to the top of the page when scrolling?",
+    help: "Want the header (logo & navigation) to stick to the top of the page when scrolling? Note that this functionality is limited to the theme.",
     checked: stickyHeader == '1' ? true : false,
     onChange: handleStickyHeader
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     onClick: handleSubmit,
     variant: "primary",
     icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_icons_save_svg__WEBPACK_IMPORTED_MODULE_3__.ReactComponent, null)
-  }, "Save")));
+  }, "Save")), isComplete && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Notice, {
+    status: "success"
+  }, "Options saved successfully!"))), isLoading && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_FormLoadingOverlay__WEBPACK_IMPORTED_MODULE_4__["default"], null));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (HeaderFooterForm);
 
