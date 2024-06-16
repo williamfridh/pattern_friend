@@ -78,7 +78,7 @@ class Pattern_Friend {
 		add_action('admin_notices', [$this, 'plugin_activation_notice']);
 
 		// Register the upgrade hook.
-		//add_action( 'upgrader_process_complete', [$this, 'update'],10, 2);
+		add_action( 'upgrader_process_complete', [$this, 'update'],10, 2);
 
 		// Initialize the filesystem.
 		$creds = request_filesystem_credentials( site_url() );
@@ -229,13 +229,13 @@ class Pattern_Friend {
 	/**
 	 * Activation.
 	 * 
-	 * Perform the necesarry tasks upon plugin activation.
+	 * Generates the necesarry tasks upon plugin activation.
 	 * 
 	 * @return void
 	 */
 	public function activation() {
 		// Prepare CSS and options.
-		$this->prepare_css_and_options();
+		$this->generate_css_and_options();
 		// Set transient
 		set_transient('plugin_activated', true, 5);
 	}
@@ -249,7 +249,7 @@ class Pattern_Friend {
 	 */
 	public function update() {
 		// Prepare CSS and options.
-		$this->prepare_css_and_options();
+		$this->generate_css_and_options();
 	}
 
 	/**
@@ -259,7 +259,8 @@ class Pattern_Friend {
 	 * 
 	 * @return void
 	 */
-	public function prepare_css_and_options() {
+	public function generate_css_and_options() {
+		$css_generator = new CSSGenerator();
 		// Generate new CSS.
 		$css_generator->generate(
 			$this->default_settings['deviceThresholds']['mobileMaxThreshold'],
