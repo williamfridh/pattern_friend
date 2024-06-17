@@ -17,7 +17,7 @@ This plugin extend the default Gutenberg block editor with functionality often r
 **Key Features:**
 1. Makes each block hidable on mobile, tablet, and desktop.
 2. Adjustable thresholds for different devices.
-3. Hidable groups that stay hiden for a set amount of time.
+3. Hidable groups, rows, and stacks that stay hidden for a set amount of time.
 
 *Note that this plugin can adds additional attributes to blocks which will not be removed upon uninstall as this can risk damaging post data.*
 
@@ -44,9 +44,11 @@ Yes. The plugin only makes use of the devices local storage to keep track of wha
 * Added form loading and success indicator
 * Added uninstall script to clear up options.
 * Added a update function thats called upon plugin update to generate new options and CSS files.
+* Refined descriptions for attributes.
+* Improved input filters.
 
 = v1.2.0 =
-* Added hidable group functionality.
+* Added hidable group, row, and stack functionality.
 
 = v1.1.0 =
 * Added sticky header support.

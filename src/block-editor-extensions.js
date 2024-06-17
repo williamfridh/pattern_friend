@@ -132,8 +132,8 @@ function HidableGroupForm(props) {
 				<PanelBody title={__("Hidable Settings")}>
 					<PanelRow>
 						<ToggleControl
-							label={__("Make Group Hidable")}
-							help={__("Make this group hidable (requires an child button marked as a group closing button).")}
+							label={__("Make Hidable")}
+							help={__("Make this element hidable (requires an child button marked as a closing button).")}
 							checked={ pf_hidable_group }
 							onChange={ () => setAttributes( { 'pf_hidable_group': ! pf_hidable_group } ) }
 						/>
@@ -142,8 +142,8 @@ function HidableGroupForm(props) {
 						<>
 							<PanelRow>
 								<InputControl
-									label={__("Group ID")}
-									help={__("Set a ID for the group. Note that multiple groups can share an same ID.")}
+									label={__("Closing ID")}
+									help={__("Set a ID for the element. Note that multiple elements can share an same ID.")}
 									value={pf_id}
 									onChange={ (value) => setAttributes( { 'pf_id': value } ) }
 								/>
@@ -153,7 +153,7 @@ function HidableGroupForm(props) {
 							</PanelRow>
 							{!pf_id && (
 								<PanelRow>
-									<Notice status="warning" isDismissible={false}>A unique ID is required to make the group hidable.</Notice>
+									<Notice status="warning" isDismissible={false}>A closing ID is required to make the element hidable.</Notice>
 								</PanelRow>
 							)}
 						</>
@@ -174,25 +174,39 @@ function HidableGroupButtonForm(props) {
 		setAttributes,
 	} = props
 
+	const handleHideDurationChange = (value) => {
+		value = parseInt(value)
+		if (value < 0)
+			value = '0'
+		setAttributes( { 'pf_hidable_group_button_hide_duration': value } )
+	}
+
 	return (
-				<PanelBody title={__("Hidable Groups")}>
+				<PanelBody title={__("Hidable Settings")}>
 					<PanelRow>
 						<ToggleControl
 							label={__("Assign As Hiding Button")}
-							help={__("Mark this button as a group hiding button. Note that is has to be a child of a group marked as hidable.")}
+							help={__("Mark this button as an element hiding button. Note that is has to be a child of an element marked as hidable.")}
 							checked={ pf_hidable_group_button }
 							onChange={ () => setAttributes( { 'pf_hidable_group_button': ! pf_hidable_group_button } ) }
 						/>
 					</PanelRow>
 					{pf_hidable_group_button && (
-						<PanelRow>
-							<NumberControl
-								label={__("Hide Duration (hours)")}
-								help={__("Set the duration for the group to be hidden in hours.")}
-								value={pf_hidable_group_button_hide_duration}
-								onChange={ (value) => setAttributes( { 'pf_hidable_group_button_hide_duration': value } ) }
-							/>
-						</PanelRow>
+						<>
+							<PanelRow>
+								<NumberControl
+									label={__("Hide Duration (hours)")}
+									help={__("Set the duration for the element to be hidden in hours.")}
+									value={pf_hidable_group_button_hide_duration}
+									onChange={ handleHideDurationChange }
+								/>
+							</PanelRow>
+							{pf_hidable_group_button_hide_duration == '0' && (
+								<PanelRow>
+									<Notice status="warning" isDismissible={false}>A hide duration is required to make the element hidable.</Notice>
+								</PanelRow>
+							)}
+						</>
 					)}
 				</PanelBody>
 	)

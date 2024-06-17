@@ -49,6 +49,8 @@ class Renderer {
 	/**
 	 * Attend the hidable groups.
 	 * 
+	 * Note that groups includes groups, rows, and stacks.
+	 * 
 	 * Wrap each block with a div element that can be hidden, assign it an id.
 	 * 
 	 * @param string $block_content The block content.
