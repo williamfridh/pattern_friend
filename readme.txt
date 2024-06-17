@@ -43,6 +43,7 @@ Yes. The plugin only makes use of the devices local storage to keep track of wha
 * Refactoring code and changing folder structure.
 * Added form loading and success indicator
 * Added uninstall script to clear up options.
+* Added a update function thats called upon plugin update to generate new options and CSS files.
 
 = v1.2.0 =
 * Added hidable group functionality.
