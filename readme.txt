@@ -3,7 +3,7 @@ Contributors: qoncer
 Tags: editor, pattern, responsive, design, layout
 Requires at least: 6.5.3
 Tested up to: 6.5.3
-Stable tag: 1.1.0
+Stable tag: 1.2.1
 Requires PHP: 7.3.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
