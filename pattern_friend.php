@@ -223,6 +223,20 @@ class Pattern_Friend {
 			$asset_file['version'],
 			'all'	
 		);
+		wp_enqueue_style(
+			__NAMESPACE__ . '_page_rtl_style',
+			plugins_url( 'build/pages-rtl.css', __FILE__ ),
+			[],
+			$asset_file['version'],
+			'all'	
+		);
+		wp_enqueue_style(
+			__NAMESPACE__ . '_wordpress_components_style',
+			plugins_url( 'src/styles/wordpress.components.css', __FILE__ ),
+			[],
+			$asset_file['version'],
+			'all'	
+		);
 
 	}
 
