@@ -250,8 +250,8 @@ class Pattern_Friend {
 	public function activation() {
 		// Prepare CSS and options.
 		$this->generate_css_and_options();
-		// Set transient
-		set_transient('plugin_activated', true, 5);
+		// Set transient (make it short lived).
+		set_transient('pf_plugin_activated', true, 10);
 	}
 
 	/**
@@ -294,15 +294,15 @@ class Pattern_Friend {
 	 */
 	public function plugin_activation_notice(){
 		// Check if the transient is set.
-		if(get_transient('plugin_activated')){
+		if(get_transient('pf_plugin_activated')){
 			?>
 			<div class="updated notice is-dismissible">
 				<p>Thank you for using Pattern Friend. <strong>You're awesome!</strong></p>
 				<p>Go to "Appearance >> Pattern Friend" to get started. Or simply <a href="/wp-admin/themes.php?page=pattern_friend">click here.</a></p>
 			</div>
 			<?php
-			// Delete the transient.
-			delete_transient('plugin_activated');
+			// Delete the transient (even though it's short lived).
+			delete_transient('pf_plugin_activated');
 		}
 	}
 

@@ -19,7 +19,12 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
     die;
 }
 
- // Remove options.
-delete_option('pf_mobile_max_threshold');
-delete_option('pf_tablet_max_threshold');
-delete_option('pf_header_sticky');
+// Delete multiple options.
+$options = array(
+	'pf_mobile_max_threshold',
+	'pf_tablet_max_threshold',
+	'pf_header_sticky',
+);
+foreach ($options as $option) {
+	if (get_option($option)) delete_option($option);
+}
