@@ -35,7 +35,7 @@ class PatternFriend {
      * Get storage object.
      */
     get_storage() {
-        const data = localStorage.getItem('pf_hidable') ? localStorage.getItem('pf_hidable') : '{}';
+        const data = localStorage.getItem('pattern_friend_hidable') ? localStorage.getItem('pattern_friend_hidable') : '{}';
         return JSON.parse(data);
     }
 
@@ -43,7 +43,7 @@ class PatternFriend {
      * Save storage object.
      */
     save_storage() {
-        localStorage.setItem('pf_hidable', JSON.stringify(this.hidable));
+        localStorage.setItem('pattern_friend_hidable', JSON.stringify(this.hidable));
     }
 
     /**

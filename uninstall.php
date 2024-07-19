@@ -21,9 +21,9 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 // Delete multiple options.
 $options = array(
-	'pf_mobile_max_threshold',
-	'pf_tablet_max_threshold',
-	'pf_header_sticky',
+	'pattern_friend_mobile_max_threshold',
+	'pattern_friend_tablet_max_threshold',
+	'pattern_friend_header_sticky',
 );
 foreach ($options as $option) {
 	if (get_option($option)) delete_option($option);

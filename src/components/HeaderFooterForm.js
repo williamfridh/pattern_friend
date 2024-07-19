@@ -19,7 +19,7 @@ const HeaderFooterForm = () => {
 		wp.apiFetch({path: '/wp-pattern-friend/v2.1/options/header_footer'}).
 			then(data => {
 					//Set the new values of the options in the state
-					setStickyHeader(data['pf_header_sticky'])
+					setStickyHeader(data['pattern_friend_header_sticky'])
 					setIsLoading(false)
 				},
 			);
@@ -44,7 +44,7 @@ const HeaderFooterForm = () => {
 			path: '/wp-pattern-friend/v2.1/options/header_footer',
 			method: 'POST',
 			data: {
-				'pf_header_sticky': stickyHeader,
+				'pattern_friend_header_sticky': stickyHeader,
 			},
 		}).then(data => {
 			setIsLoading(false)

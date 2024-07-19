@@ -86,8 +86,8 @@ class Routes extends \WP_REST_Controller {
 
 		// Generate the response.
 		$response = [];
-		$response['pf_mobile_max_threshold'] = get_option('pf_mobile_max_threshold');
-		$response['pf_tablet_max_threshold'] = get_option('pf_tablet_max_threshold');
+		$response['pattern_friend_mobile_max_threshold'] = get_option('pattern_friend_mobile_max_threshold');
+		$response['pattern_friend_tablet_max_threshold'] = get_option('pattern_friend_tablet_max_threshold');
 
 		// Prepare the response.
 		$response = new \WP_REST_Response($response);
@@ -105,12 +105,12 @@ class Routes extends \WP_REST_Controller {
 	public function update_options_block_visibility( \WP_REST_Request $request ) {
 
 		// Get the data and sanitize.
-		$pf_mobile_max_threshold = absint( $request->get_param( 'pf_mobile_max_threshold' ) );
-		$pf_tablet_max_threshold = absint( $request->get_param( 'pf_tablet_max_threshold' ) );
+		$mobile_max_threshold = absint( $request->get_param( 'pattern_friend_mobile_max_threshold' ) );
+		$tablet_max_threshold = absint( $request->get_param( 'pattern_friend_tablet_max_threshold' ) );
 
 		// Update the options.
-		update_option( 'pf_mobile_max_threshold', $pf_mobile_max_threshold );
-		update_option( 'pf_tablet_max_threshold', $pf_tablet_max_threshold );
+		update_option( 'pattern_friend_mobile_max_threshold', $mobile_max_threshold );
+		update_option( 'pattern_friend_tablet_max_threshold', $tablet_max_threshold );
 
 		// Generate new CSS.
 		$this->generate_css();
@@ -131,7 +131,7 @@ class Routes extends \WP_REST_Controller {
 
 		// Generate the response.
 		$response = [];
-		$response['pf_header_sticky'] = get_option('pf_header_sticky');
+		$response['pattern_friend_header_sticky'] = get_option('pattern_friend_header_sticky');
 
 		// Generate new CSS.
 		$this->generate_css();
@@ -146,12 +146,12 @@ class Routes extends \WP_REST_Controller {
 	 * Call CSS Generator to generate new CSS.
 	 */
 	private function generate_css() {
-		$pf_mobile_max_threshold = get_option('pf_mobile_max_threshold');
-		$pf_tablet_max_threshold = get_option('pf_tablet_max_threshold');
-		$pf_header_sticky = get_option('pf_header_sticky');
+		$mobile_max_threshold = get_option('pattern_friend_mobile_max_threshold');
+		$tablet_max_threshold = get_option('pattern_friend_tablet_max_threshold');
+		$header_sticky = get_option('pattern_friend_header_sticky');
 
 		$css_generator = new \PatternFriend\CSSGenerator();
-		$css_generator->generate($pf_mobile_max_threshold, $pf_tablet_max_threshold, $pf_header_sticky);
+		$css_generator->generate($mobile_max_threshold, $tablet_max_threshold, $header_sticky);
 	}
 
 	/**
@@ -163,10 +163,10 @@ class Routes extends \WP_REST_Controller {
 	public function update_options_header_footer( \WP_REST_Request $request ) {
 
 		// Get the data and sanitize.
-		$pf_header_sticky = $request->get_param( 'pf_header_sticky' );
+		$header_sticky = $request->get_param( 'pattern_friend_header_sticky' );
 
 		// Update the options.
-		update_option( 'pf_header_sticky', $pf_header_sticky );
+		update_option( 'pattern_friend_header_sticky', $header_sticky );
 
 		// Prepare the response.
 		$response = new \WP_REST_Response( 'Data successfully added.', '200' );

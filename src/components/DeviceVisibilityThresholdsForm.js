@@ -23,8 +23,8 @@ const DeviceVisibilityThresholdsForm = () => {
 		wp.apiFetch({path: '/wp-pattern-friend/v2.1/options/block_visibility'}).
 			then(data => {
 					//Set the new values of the options in the state
-					setMobileMaxThreshold(data['pf_mobile_max_threshold'])
-					setTabletMaxThreshold(data['pf_tablet_max_threshold'])
+					setMobileMaxThreshold(data['pattern_friend_mobile_max_threshold'])
+					setTabletMaxThreshold(data['pattern_friend_tablet_max_threshold'])
 					setIsLoading(false)
 				},
 			);
@@ -60,8 +60,8 @@ const DeviceVisibilityThresholdsForm = () => {
 			path: '/wp-pattern-friend/v2.1/options/block_visibility',
 			method: 'POST',
 			data: {
-				'pf_mobile_max_threshold': mobileMaxThreshold,
-				'pf_tablet_max_threshold': tabletMaxThreshold,
+				'pattern_friend_mobile_max_threshold': mobileMaxThreshold,
+				'pattern_friend_tablet_max_threshold': tabletMaxThreshold,
 			},
 		}).then(data => {
 			setIsLoading(false)

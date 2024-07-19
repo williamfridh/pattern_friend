@@ -38,6 +38,11 @@ Yes. The plugin only makes use of the devices local storage to keep track of wha
 
 == Changelog ==
 
+= v1.2.2 =
+* Changed option name prefixes.
+* Changed transient name prefixes.
+* Added a button to read the generated CSS files...
+
 = v1.2.1 =
 * Added button to load default threshold resolutions.
 * Refactoring code and changing folder structure.
@@ -57,6 +62,9 @@ Yes. The plugin only makes use of the devices local storage to keep track of wha
 * Initial release
 
 == Upgrade Notice ==
+
+= v1.2.2 =
+* More stable thanks to more unique prefixes.
 
 = v1.2.1 =
 * Added functionality and improved overall plugin quality.

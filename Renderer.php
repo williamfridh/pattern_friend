@@ -26,19 +26,19 @@ class Renderer {
 	
 		// Collect attributes.
 		$attributes = $block['attrs'];
-		$pf_hide_on_mobile = isset($attributes['pf_hide_on_mobile']) ? $attributes['pf_hide_on_mobile'] : false;
-		$pf_hide_on_tablet = isset($attributes['pf_hide_on_tablet']) ? $attributes['pf_hide_on_tablet'] : false;
-		$pf_hide_on_computer = isset($attributes['pf_hide_on_computer']) ? $attributes['pf_hide_on_computer'] : false;
+		$hide_on_mobile = isset($attributes['pattern_friend_hide_on_mobile']) ? $attributes['pattern_friend_hide_on_mobile'] : false;
+		$hide_on_tablet = isset($attributes['pattern_friend_hide_on_tablet']) ? $attributes['pattern_friend_hide_on_tablet'] : false;
+		$hide_on_computer = isset($attributes['pattern_friend_hide_on_computer']) ? $attributes['pattern_friend_hide_on_computer'] : false;
 	
 		/*
 		 * Wrap the block content with the visibility classes based on the attributes,
 		 * if any of the attributes are set to true.
 		 */
-		if ($pf_hide_on_mobile || $pf_hide_on_tablet || $pf_hide_on_computer) {
+		if ($hide_on_mobile || $hide_on_tablet || $hide_on_computer) {
 			$wrapperElementClasses = '';
-			if ($pf_hide_on_mobile) $wrapperElementClasses .= ' pf-hide-on-mobile';
-			if ($pf_hide_on_tablet) $wrapperElementClasses .= ' pf-hide-on-tablet';
-			if ($pf_hide_on_computer) $wrapperElementClasses .= ' pf-hide-on-desktop';
+			if ($hide_on_mobile) $wrapperElementClasses .= ' pf-hide-on-mobile';
+			if ($hide_on_tablet) $wrapperElementClasses .= ' pf-hide-on-tablet';
+			if ($hide_on_computer) $wrapperElementClasses .= ' pf-hide-on-desktop';
 			$block_content = '<div class="' . esc_attr($wrapperElementClasses) . '">' . $block_content . '</div>';
 		}
 	
@@ -65,10 +65,10 @@ class Renderer {
 			return $block_content;
 		}
 		// Check if the block is hidable.
-		$pf_hidable_group = isset($attributes['pf_hidable_group']) ? $attributes['pf_hidable_group'] : false;
+		$hidable_group = isset($attributes['pattern_friend_hidable_group']) ? $attributes['pattern_friend_hidable_group'] : false;
 		// If the block is hidable, wrap it with a div element.
-		if ($pf_hidable_group && isset($attributes['pf_id'])) {
-			$block_content = '<div class="pf-hidable" data-block-id="' . $attributes['pf_id'] . '">' . $block_content . '</div>';
+		if ($hidable_group && isset($attributes['pattern_friend_id'])) {
+			$block_content = '<div class="pf-hidable" data-block-id="' . $attributes['pattern_friend_id'] . '">' . $block_content . '</div>';
 		}
 		// Return the block content.
 		return $block_content;
@@ -88,11 +88,11 @@ class Renderer {
 			return $block_content;
 		}
 		// Check if the button is a group hiding button.
-		$pf_hidable_group_button = isset($attributes['pf_hidable_group_button']) ? $attributes['pf_hidable_group_button'] : false;
+		$hidable_group_button = isset($attributes['pattern_friend_hidable_group_button']) ? $attributes['pattern_friend_hidable_group_button'] : false;
 		// If the button is a group hiding button, put it inside a wrapper bound to a onClick function.
-		if ($pf_hidable_group_button) {
+		if ($hidable_group_button) {
 			// Get duration.
-			$duration = isset($attributes['pf_hide_duration']) ? $attributes['pf_hide_duration'] : 24;
+			$duration = isset($attributes['pattern_friend_hide_duration']) ? $attributes['pattern_friend_hide_duration'] : 24;
 			// Wrap the button with a div element.
 			$block_content = '<div class="pf-hidable-group-button" onclick="patternFriend.hide(this, ' . $duration . ')">' . $block_content . '</div>';
 		}

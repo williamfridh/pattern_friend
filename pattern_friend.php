@@ -251,7 +251,7 @@ class Pattern_Friend {
 		// Prepare CSS and options.
 		$this->generate_css_and_options();
 		// Set transient (make it short lived).
-		set_transient('pf_plugin_activated', true, 10);
+		set_transient('pattern_friend_plugin_activated', true, 10);
 	}
 
 	/**
@@ -282,9 +282,9 @@ class Pattern_Friend {
 			$this->default_settings['headerFooter']['headerSticky']
 		);
 		// Set default options.
-		add_option('pf_mobile_max_threshold', $this->default_settings['deviceThresholds']['mobileMaxThreshold']);
-		add_option('pf_tablet_max_threshold', $this->default_settings['deviceThresholds']['tabletMaxThreshold']);
-		add_option('pf_header_sticky', $this->default_settings['headerFooter']['headerSticky']);
+		add_option('pattern_friend_mobile_max_threshold', $this->default_settings['deviceThresholds']['mobileMaxThreshold']);
+		add_option('pattern_friend_tablet_max_threshold', $this->default_settings['deviceThresholds']['tabletMaxThreshold']);
+		add_option('pattern_friend_header_sticky', $this->default_settings['headerFooter']['headerSticky']);
 	}
 
 	/**
@@ -294,7 +294,7 @@ class Pattern_Friend {
 	 */
 	public function plugin_activation_notice(){
 		// Check if the transient is set.
-		if(get_transient('pf_plugin_activated')){
+		if(get_transient('pattern_friend_plugin_activated')){
 			?>
 			<div class="updated notice is-dismissible">
 				<p>Thank you for using Pattern Friend. <strong>You're awesome!</strong></p>
@@ -302,7 +302,7 @@ class Pattern_Friend {
 			</div>
 			<?php
 			// Delete the transient (even though it's short lived).
-			delete_transient('pf_plugin_activated');
+			delete_transient('pattern_friend_plugin_activated');
 		}
 	}
 
