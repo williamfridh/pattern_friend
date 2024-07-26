@@ -18,12 +18,12 @@ addFilter(
 			settings.attributes = {
 				...settings.attributes,
 			
-				'pf_hidable_group': {
+				'pattern_friend_hidable_group': {
 					type: 'boolean',
 					default: false,
 				},
 			
-				'pf_id': {
+				'pattern_friend_id': {
 					type: 'string',
 					default: '',
 				},
@@ -34,11 +34,11 @@ addFilter(
 			settings.attributes = {
 				...settings.attributes,
 				
-				'pf_hidable_group_button': {
+				'pattern_friend_hidable_group_button': {
 					type: 'boolean',
 					default: false,
 				},
-				'pf_hidable_group_button_hide_duration': {
+				'pattern_friend_hidable_group_button_hide_duration': {
 					type: 'number',
 					default: 0, // Set in hours
 				},
@@ -48,15 +48,15 @@ addFilter(
 		settings.attributes = {
 			...settings.attributes,
 
-			'pf_hide_on_mobile': {
+			'pattern_friend_hide_on_mobile': {
 				type: 'boolean',
 				default: false,
 			},
-			'pf_hide_on_tablet': {
+			'pattern_friend_hide_on_tablet': {
 				type: 'boolean',
 				default: false,
 			},
-			'pf_hide_on_computer': {
+			'pattern_friend_hide_on_computer': {
 				type: 'boolean',
 				default: false,
 			},
@@ -73,9 +73,9 @@ addFilter(
 function VisibilityForm(props) {
 	const {
 		attributes: {
-			'pf_hide_on_mobile': pf_hide_on_mobile,
-			'pf_hide_on_tablet': pf_hide_on_tablet,
-			'pf_hide_on_computer': pf_hide_on_computer,
+			'pattern_friend_hide_on_mobile': pattern_friend_hide_on_mobile,
+			'pattern_friend_hide_on_tablet': pattern_friend_hide_on_tablet,
+			'pattern_friend_hide_on_computer': pattern_friend_hide_on_computer,
 		},
 		setAttributes,
 	} = props
@@ -85,25 +85,25 @@ function VisibilityForm(props) {
 					<PanelRow>
 						<ToggleControl
 							label={__("Hide on mobile")}
-							checked={ pf_hide_on_mobile }
-							onChange={ () => setAttributes( { 'pf_hide_on_mobile': ! pf_hide_on_mobile } ) }
+							checked={ pattern_friend_hide_on_mobile }
+							onChange={ () => setAttributes( { 'pattern_friend_hide_on_mobile': ! pattern_friend_hide_on_mobile } ) }
 						/>
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
 							label={__("Hide on tablet")}
-							checked={ pf_hide_on_tablet }
-							onChange={ () => setAttributes( { 'pf_hide_on_tablet': ! pf_hide_on_tablet } ) }
+							checked={ pattern_friend_hide_on_tablet }
+							onChange={ () => setAttributes( { 'pattern_friend_hide_on_tablet': ! pattern_friend_hide_on_tablet } ) }
 						/>
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
 							label={__("Hide on computer")}
-							checked={ pf_hide_on_computer }
-							onChange={ () => setAttributes( { 'pf_hide_on_computer': ! pf_hide_on_computer } ) }
+							checked={ pattern_friend_hide_on_computer }
+							onChange={ () => setAttributes( { 'pattern_friend_hide_on_computer': ! pattern_friend_hide_on_computer } ) }
 						/>
 					</PanelRow>
-					{pf_hide_on_mobile && pf_hide_on_tablet && pf_hide_on_computer && (
+					{pattern_friend_hide_on_mobile && pattern_friend_hide_on_tablet && pattern_friend_hide_on_computer && (
 						<PanelRow>
 							<Notice status="warning" isDismissible={false}>You're hiding the block on all devices.</Notice>
 						</PanelRow>
@@ -118,14 +118,14 @@ function VisibilityForm(props) {
 function HidableGroupForm(props) {
 	const {
 		attributes: {
-			'pf_hidable_group': pf_hidable_group,
-			'pf_id': pf_id,
+			'pattern_friend_hidable_group': pattern_friend_hidable_group,
+			'pattern_friend_id': pattern_friend_id,
 		},
 		setAttributes,
 	} = props
 
 	const setRandomId = () => {
-		setAttributes( { 'pf_id': Math.random().toString(36) } )
+		setAttributes( { 'pattern_friend_id': Math.random().toString(36) } )
 	}
 
 	return (
@@ -134,24 +134,24 @@ function HidableGroupForm(props) {
 						<ToggleControl
 							label={__("Make Hidable")}
 							help={__("Make this element hidable (requires an child button marked as a closing button).")}
-							checked={ pf_hidable_group }
-							onChange={ () => setAttributes( { 'pf_hidable_group': ! pf_hidable_group } ) }
+							checked={ pattern_friend_hidable_group }
+							onChange={ () => setAttributes( { 'pattern_friend_hidable_group': ! pattern_friend_hidable_group } ) }
 						/>
 					</PanelRow>
-					{pf_hidable_group && (
+					{pattern_friend_hidable_group && (
 						<>
 							<PanelRow>
 								<InputControl
 									label={__("Closing ID")}
 									help={__("Set a ID for the element. Note that multiple elements can share an same ID.")}
-									value={pf_id}
-									onChange={ (value) => setAttributes( { 'pf_id': value } ) }
+									value={pattern_friend_id}
+									onChange={ (value) => setAttributes( { 'pattern_friend_id': value } ) }
 								/>
 							</PanelRow>
 							<PanelRow>
 								<Button variant="secondary" onClick={ () => {setRandomId()} }>Generate Random ID</Button>
 							</PanelRow>
-							{!pf_id && (
+							{!pattern_friend_id && (
 								<PanelRow>
 									<Notice status="warning" isDismissible={false}>A closing ID is required to make the element hidable.</Notice>
 								</PanelRow>
@@ -168,8 +168,8 @@ function HidableGroupForm(props) {
 function HidableGroupButtonForm(props) {
 	const {
 		attributes: {
-			'pf_hidable_group_button': pf_hidable_group_button,
-			'pf_hidable_group_button_hide_duration': pf_hidable_group_button_hide_duration,
+			'pattern_friend_hidable_group_button': pattern_friend_hidable_group_button,
+			'pattern_friend_hidable_group_button_hide_duration': pattern_friend_hidable_group_button_hide_duration,
 		},
 		setAttributes,
 	} = props
@@ -178,7 +178,7 @@ function HidableGroupButtonForm(props) {
 		value = parseInt(value)
 		if (value < 0)
 			value = '0'
-		setAttributes( { 'pf_hidable_group_button_hide_duration': value } )
+		setAttributes( { 'pattern_friend_hidable_group_button_hide_duration': value } )
 	}
 
 	return (
@@ -187,21 +187,21 @@ function HidableGroupButtonForm(props) {
 						<ToggleControl
 							label={__("Assign As Hiding Button")}
 							help={__("Mark this button as an element hiding button. Note that is has to be a child of an element marked as hidable.")}
-							checked={ pf_hidable_group_button }
-							onChange={ () => setAttributes( { 'pf_hidable_group_button': ! pf_hidable_group_button } ) }
+							checked={ pattern_friend_hidable_group_button }
+							onChange={ () => setAttributes( { 'pattern_friend_hidable_group_button': ! pattern_friend_hidable_group_button } ) }
 						/>
 					</PanelRow>
-					{pf_hidable_group_button && (
+					{pattern_friend_hidable_group_button && (
 						<>
 							<PanelRow>
 								<NumberControl
 									label={__("Hide Duration (hours)")}
 									help={__("Set the duration for the element to be hidden in hours.")}
-									value={pf_hidable_group_button_hide_duration}
+									value={pattern_friend_hidable_group_button_hide_duration}
 									onChange={ handleHideDurationChange }
 								/>
 							</PanelRow>
-							{pf_hidable_group_button_hide_duration == '0' && (
+							{pattern_friend_hidable_group_button_hide_duration == '0' && (
 								<PanelRow>
 									<Notice status="warning" isDismissible={false}>A hide duration is required to make the element hidable.</Notice>
 								</PanelRow>
@@ -221,14 +221,14 @@ addFilter(
 
             // Get the current attributes
             const { attributes } = props
-            const { pf_hide_on_mobile, pf_hide_on_tablet, pf_hide_on_computer } = attributes
+            const { pattern_friend_hide_on_mobile, pattern_friend_hide_on_tablet, pattern_friend_hide_on_computer } = attributes
 
 			let wrappedElement = <BlockEdit { ...props } />
-			if (pf_hide_on_mobile || pf_hide_on_tablet || pf_hide_on_computer) {
+			if (pattern_friend_hide_on_mobile || pattern_friend_hide_on_tablet || pattern_friend_hide_on_computer) {
 				let wrapperElementClasses = `
-					${pf_hide_on_mobile ? ' pf-hide-on-mobile' : ''}
-					${pf_hide_on_tablet ? ' pf-hide-on-tablet' : ''}
-					${pf_hide_on_computer ? ' pf-hide-on-desktop' : ''}
+					${pattern_friend_hide_on_mobile ? ' pf-hide-on-mobile' : ''}
+					${pattern_friend_hide_on_tablet ? ' pf-hide-on-tablet' : ''}
+					${pattern_friend_hide_on_computer ? ' pf-hide-on-desktop' : ''}
 					`
 				wrappedElement = <div className={wrapperElementClasses}>{wrappedElement}</div>
 			}

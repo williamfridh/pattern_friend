@@ -8,9 +8,23 @@
  * 
  * What this function must do:
  * 1. Delete options.
+ * 
+ * More reading:
+ * - https://developer.wordpress.org/plugins/plugin-basics/uninstall-methods/
+ * - https://developer.wordpress.org/reference/functions/register_uninstall_hook/
  */
 
- // Remove options.
-delete_option('pf_mobile_max_threshold');
-delete_option('pf_tablet_max_threshold');
-delete_option('pf_header_sticky');
+// If uninstall.php is not called by WordPress, die.
+if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+    die;
+}
+
+// Delete multiple options.
+$options = array(
+	'pattern_friend_mobile_max_threshold',
+	'pattern_friend_tablet_max_threshold',
+	'pattern_friend_header_sticky',
+);
+foreach ($options as $option) {
+	if (get_option($option)) delete_option($option);
+}

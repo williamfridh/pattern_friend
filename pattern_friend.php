@@ -4,7 +4,7 @@
  * Description:       Extends the Gutenberg editor with addtional functionality with lightweight code.
  * Requires at least: 6.5.3
  * Requires PHP:      7.3.5
- * Version:           1.2.1
+ * Version:           1.2.2
  * Author:            William Fridh
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -53,7 +53,9 @@ class Pattern_Friend {
 		add_action('rest_api_init', [$this, 'activate_routes']);
 
 		// Enqueue visitor side scripts.
-		add_action('wp_enqueue_scripts', [$this, 'enqueue_visitor_scripts']);
+		if (!is_admin()) {
+			add_action('wp_enqueue_scripts', [$this, 'enqueue_visitor_scripts']);
+		}
 
 		// Enqueue the block edit extenions assets for both viewing and editing.
 		add_action('enqueue_block_editor_assets', [$this, 'enqueue_block_editor_extensions']);
@@ -223,6 +225,20 @@ class Pattern_Friend {
 			$asset_file['version'],
 			'all'	
 		);
+		wp_enqueue_style(
+			__NAMESPACE__ . '_page_rtl_style',
+			plugins_url( 'build/pages-rtl.css', __FILE__ ),
+			[],
+			$asset_file['version'],
+			'all'	
+		);
+		wp_enqueue_style(
+			__NAMESPACE__ . '_wordpress_components_style',
+			plugins_url( 'src/styles/wordpress.components.css', __FILE__ ),
+			[],
+			$asset_file['version'],
+			'all'	
+		);
 
 	}
 
@@ -236,8 +252,8 @@ class Pattern_Friend {
 	public function activation() {
 		// Prepare CSS and options.
 		$this->generate_css_and_options();
-		// Set transient
-		set_transient('plugin_activated', true, 5);
+		// Set transient (make it short lived).
+		set_transient('pattern_friend_plugin_activated', true, 10);
 	}
 
 	/**
@@ -268,9 +284,9 @@ class Pattern_Friend {
 			$this->default_settings['headerFooter']['headerSticky']
 		);
 		// Set default options.
-		add_option('pf_mobile_max_threshold', $this->default_settings['deviceThresholds']['mobileMaxThreshold']);
-		add_option('pf_tablet_max_threshold', $this->default_settings['deviceThresholds']['tabletMaxThreshold']);
-		add_option('pf_header_sticky', $this->default_settings['headerFooter']['headerSticky']);
+		add_option('pattern_friend_mobile_max_threshold', $this->default_settings['deviceThresholds']['mobileMaxThreshold']);
+		add_option('pattern_friend_tablet_max_threshold', $this->default_settings['deviceThresholds']['tabletMaxThreshold']);
+		add_option('pattern_friend_header_sticky', $this->default_settings['headerFooter']['headerSticky']);
 	}
 
 	/**
@@ -280,15 +296,15 @@ class Pattern_Friend {
 	 */
 	public function plugin_activation_notice(){
 		// Check if the transient is set.
-		if(get_transient('plugin_activated')){
+		if(get_transient('pattern_friend_plugin_activated')){
 			?>
 			<div class="updated notice is-dismissible">
 				<p>Thank you for using Pattern Friend. <strong>You're awesome!</strong></p>
 				<p>Go to "Appearance >> Pattern Friend" to get started. Or simply <a href="/wp-admin/themes.php?page=pattern_friend">click here.</a></p>
 			</div>
 			<?php
-			// Delete the transient.
-			delete_transient('plugin_activated');
+			// Delete the transient (even though it's short lived).
+			delete_transient('pattern_friend_plugin_activated');
 		}
 	}
 
