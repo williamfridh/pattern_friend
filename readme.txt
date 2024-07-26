@@ -2,8 +2,8 @@
 Contributors: qoncer
 Tags: editor, pattern, responsive, design, layout
 Requires at least: 6.5.3
-Tested up to: 6.5.3
-Stable tag: 1.2.1
+Tested up to: 6.6.1
+Stable tag: 1.2.2
 Requires PHP: 7.3.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -41,7 +41,8 @@ Yes. The plugin only makes use of the devices local storage to keep track of wha
 = v1.2.2 =
 * Changed option name prefixes.
 * Changed transient name prefixes.
-* Added a button to read the generated CSS files...
+* Added a button to read the generated CSS files.
+* Added warning to notify user about missing theme.json to alarm about possible non-working functions.
 
 = v1.2.1 =
 * Added button to load default threshold resolutions.
@@ -65,6 +66,7 @@ Yes. The plugin only makes use of the devices local storage to keep track of wha
 
 = v1.2.2 =
 * More stable thanks to more unique prefixes.
+* Better debugging.
 
 = v1.2.1 =
 * Added functionality and improved overall plugin quality.

@@ -1,6 +1,12 @@
 import { useEffect } from 'react'
 import { useState } from '@wordpress/element'
-import { PanelBody, PanelRow, Button, CheckboxControl, Notice } from '@wordpress/components'
+import {
+	PanelBody,
+	PanelRow,
+	Button,
+	CheckboxControl,
+	Notice,
+} from '@wordpress/components'
 import { ReactComponent as SaveIcon } from '../icons/save.svg';
 import FormLoadingOverlay from './FormLoadingOverlay';
 
@@ -16,7 +22,7 @@ const HeaderFooterForm = () => {
 		 * Initialize the options fields with the data received from the REST API
 		 * endpoint provided by the plugin.
 		 */
-		wp.apiFetch({path: '/wp-pattern-friend/v2.1/options/header_footer'}).
+		wp.apiFetch({path: '/wp-pattern-friend/v2.2/options/header_footer'}).
 			then(data => {
 					//Set the new values of the options in the state
 					setStickyHeader(data['pattern_friend_header_sticky'])
@@ -41,7 +47,7 @@ const HeaderFooterForm = () => {
 	const handleSubmit = () => {
 		setIsLoading(true)
 		wp.apiFetch({
-			path: '/wp-pattern-friend/v2.1/options/header_footer',
+			path: '/wp-pattern-friend/v2.2/options/header_footer',
 			method: 'POST',
 			data: {
 				'pattern_friend_header_sticky': stickyHeader,

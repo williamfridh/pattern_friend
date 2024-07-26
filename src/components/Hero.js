@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 const Hero = () => {
     return (
         <header className="pf-hero">
@@ -8,8 +6,6 @@ const Hero = () => {
         </header>
     );
 }
-
-Hero.propTypes = {};
 
 export default Hero;
 

@@ -4,7 +4,7 @@
  * Description:       Extends the Gutenberg editor with addtional functionality with lightweight code.
  * Requires at least: 6.5.3
  * Requires PHP:      7.3.5
- * Version:           1.2.1
+ * Version:           1.2.2
  * Author:            William Fridh
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -53,7 +53,9 @@ class Pattern_Friend {
 		add_action('rest_api_init', [$this, 'activate_routes']);
 
 		// Enqueue visitor side scripts.
-		add_action('wp_enqueue_scripts', [$this, 'enqueue_visitor_scripts']);
+		if (!is_admin()) {
+			add_action('wp_enqueue_scripts', [$this, 'enqueue_visitor_scripts']);
+		}
 
 		// Enqueue the block edit extenions assets for both viewing and editing.
 		add_action('enqueue_block_editor_assets', [$this, 'enqueue_block_editor_extensions']);

@@ -32,7 +32,7 @@ class Routes extends \WP_REST_Controller {
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->version = '2.1';
+		$this->version = '2.2';
 		$this->namespace = 'wp-pattern-friend/v' . $this->version;
 	}
 
@@ -74,6 +74,32 @@ class Routes extends \WP_REST_Controller {
 				'permission_callback'   => array($this, 'update_item_permissions_check')
 			)
 		);
+
+		// Check for block support.
+		register_rest_route(
+			$this->namespace, '/checks/block_support', array(
+				'methods'               => \WP_REST_Server::READABLE,
+				'callback'              => array($this, 'check_block_support'),
+				'permission_callback'   => array($this, 'get_items_permissions_check')
+			)
+		);
+	}
+
+	/**
+	 * Callback for the block support endpoint.
+	 * 
+	 * @param WP_REST_Request $request Full data about the request.
+	 * @return WP_Error|WP_REST_Response
+	 */
+	public function check_block_support( \WP_REST_Request $request ) {
+		
+		// Check if the block is supported.
+		$block_support = wp_is_block_theme();
+
+		// Prepare the response.
+		$response = new \WP_REST_Response( $block_support, '200' );
+		return $response;
+
 	}
 
 	/*

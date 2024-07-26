@@ -20,7 +20,7 @@ const DeviceVisibilityThresholdsForm = () => {
 		 * Initialize the options fields with the data received from the REST API
 		 * endpoint provided by the plugin.
 		 */
-		wp.apiFetch({path: '/wp-pattern-friend/v2.1/options/block_visibility'}).
+		wp.apiFetch({path: '/wp-pattern-friend/v2.2/options/block_visibility'}).
 			then(data => {
 					//Set the new values of the options in the state
 					setMobileMaxThreshold(data['pattern_friend_mobile_max_threshold'])
@@ -57,7 +57,7 @@ const DeviceVisibilityThresholdsForm = () => {
 	const handleSubmit = () => {
 		setIsLoading(true)
 		wp.apiFetch({
-			path: '/wp-pattern-friend/v2.1/options/block_visibility',
+			path: '/wp-pattern-friend/v2.2/options/block_visibility',
 			method: 'POST',
 			data: {
 				'pattern_friend_mobile_max_threshold': mobileMaxThreshold,
