@@ -34,8 +34,9 @@ Yes. The plugin only makes use of the devices local storage to keep track of wha
 
 == Screenshots ==
 
-1. The options page where the user can modify the thresholds.
-2. What the additional input fields looks like.
+1. The options page where the user can modify thresholds and devices and enable sticky header for certain themes.
+2. Elements can be assigned when to be hidden, and groups/rows/columns can be made hideable.
+3. To hide an element you assign this to a button that hides it for a certain amount of time.
 
 == Changelog ==
 
