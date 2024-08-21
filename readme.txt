@@ -1,5 +1,6 @@
 === Pattern Friend ===
 Contributors: qoncer
+Donate link: https://www.paypal.com/donate/?hosted_button_id=QUR3W7XU9KFF8
 Tags: editor, pattern, responsive, design, layout
 Requires at least: 6.5.3
 Tested up to: 6.6.1
