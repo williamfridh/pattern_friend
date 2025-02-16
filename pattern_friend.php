@@ -170,12 +170,15 @@ class Pattern_Friend {
 
 		$asset_file = include( plugin_dir_path( __FILE__ ) . 'build/block-editor-extensions.asset.php');
 
+		// Load the dynamic CSS version.
+		$dynamic_css_version = get_option('pattern_friend_dynamic_css_version');
+
 		// Enqueue the bundled block JS file.
 		wp_enqueue_style(
 			__NAMESPACE__ . '_dynamic_css_styles',
 			plugins_url( 'src/styles/dynamic.css', __FILE__ ),
 			[],
-			$asset_file['version'],
+			$dynamic_css_version,
 			'all'	
 		);
 	}
@@ -284,6 +287,7 @@ class Pattern_Friend {
 			$this->default_settings['headerFooter']['headerSticky']
 		);
 		// Set default options.
+		add_option('pattern_friend_dynamic_css_version', 1);
 		add_option('pattern_friend_mobile_max_threshold', $this->default_settings['deviceThresholds']['mobileMaxThreshold']);
 		add_option('pattern_friend_tablet_max_threshold', $this->default_settings['deviceThresholds']['tabletMaxThreshold']);
 		add_option('pattern_friend_header_sticky', $this->default_settings['headerFooter']['headerSticky']);

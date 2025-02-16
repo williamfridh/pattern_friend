@@ -169,6 +169,21 @@ class Routes extends \WP_REST_Controller {
 	}
 
 	/**
+	 * Increment dynamic CSS version option.
+	 * 
+	 * Loads the dynamic CSS version option and increments it by one,
+	 * then saves the new value.
+	 * 
+	 * @return void
+	 */
+	private function increment_dynamic_css_version() {
+		$dynamic_css_version = get_option('pattern_friend_dynamic_css_version');
+		$dynamic_css_version++;
+		update_option('pattern_friend_dynamic_css_version', $dynamic_css_version);
+		return $dynamic_css_version;
+	}
+
+	/**
 	 * Call CSS Generator to generate new CSS.
 	 */
 	private function generate_css() {
@@ -178,6 +193,9 @@ class Routes extends \WP_REST_Controller {
 
 		$css_generator = new \PatternFriend\CSSGenerator();
 		$css_generator->generate($mobile_max_threshold, $tablet_max_threshold, $header_sticky);
+
+		// Increment dynamic CSS version.
+		$this->increment_dynamic_css_version();
 	}
 
 	/**

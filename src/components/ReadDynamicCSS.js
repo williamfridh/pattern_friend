@@ -11,7 +11,7 @@ const ReadDynamicCSS = () => {
 			</PanelRow>
 
 			<PanelRow>
-				<a href='/wp-content/plugins/pattern_friend/src/styles/dynamic.css' target='_blank'><Button variant='primary' icon={<LinkIcon />}>Open Dynamic CSS File</Button></a>
+				<a href='/wp-content/plugins/pattern-friend/src/styles/dynamic.css' target='_blank'><Button variant='primary' icon={<LinkIcon />}>Open Dynamic CSS File</Button></a>
 			</PanelRow>
 			
 		</PanelBody>

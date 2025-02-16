@@ -86,7 +86,7 @@ const DeviceVisibilityThresholdsForm = () => {
 					<PanelRow>
 						<NumberControl
 							label="Mobile Max Threshold"
-							help="The maximum width in pixels for mobile devices."
+							help="The maximum width in pixels for mobile devices (default: 600)."
 							value={mobileMaxThreshold}
 							onChange={handleMobileMaxThresholdChange}
 							type="number"
@@ -96,7 +96,7 @@ const DeviceVisibilityThresholdsForm = () => {
 					<PanelRow>
 						<NumberControl
 							label="Tablet Max Threshold"
-							help="The maximum width in pixels for tablet devices."
+							help="The maximum width in pixels for tablet devices (default 1024)."
 							value={tabletMaxThreshold}
 							onChange={handleTabletMaxThresholdChange}
 							type="number"
