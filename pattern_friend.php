@@ -4,7 +4,7 @@
  * Description:       Extends the Gutenberg editor with addtional functionality with lightweight code.
  * Requires at least: 6.5.3
  * Requires PHP:      7.3.5
- * Version:           1.2.2
+ * Version:           1.2.5
  * Author:            William Fridh
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
