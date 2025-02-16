@@ -8,7 +8,7 @@ import {
     __experimentalDivider as Divider,
     __experimentalVStack as VStack,
 } from '@wordpress/components'
-import ReadDynamicCSS from './components/ReadDynamicCss'
+import ReadDynamicCSS from './components/ReadDynamicCSS'
 import ThemeBlockSupport from './components/ThemeBlockSupport'
 
 // App component

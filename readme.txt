@@ -3,8 +3,8 @@ Contributors: qoncer
 Donate link: https://www.paypal.com/donate/?hosted_button_id=QUR3W7XU9KFF8
 Tags: editor, pattern, responsive, design, layout
 Requires at least: 6.5.3
-Tested up to: 6.6.1
-Stable tag: 1.2.2
+Tested up to: 6.7.2
+Stable tag: 1.2.5
 Requires PHP: 7.3.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -40,6 +40,11 @@ Yes. The plugin only makes use of the devices local storage to keep track of wha
 
 == Changelog ==
 
+= v1.2.5 =
+* Fixed link issue for non-working "Open Dynamic CSS File" button.
+* Added additional helping text under inputs.
+* Fixed caching issue, fixing non-showing changes.
+
 = v1.2.2 =
 * Changed option name prefixes.
 * Changed transient name prefixes.
@@ -65,6 +70,9 @@ Yes. The plugin only makes use of the devices local storage to keep track of wha
 * Initial release
 
 == Upgrade Notice ==
+
+= v1.2.5 =
+* Bug fixes.
 
 = v1.2.2 =
 * More stable thanks to more unique prefixes.
